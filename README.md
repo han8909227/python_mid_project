@@ -9,10 +9,13 @@ TechLurker is an app which gives up to date information on all of the latest new
 ### How to Contribute
 
 ### Meet the Team
-[Han Bao] <https://github.com/han8909227>
-[Phillip Werner] <https://github.com/philipwerner>
-[Brian Wheeler] <https://github.com/PoundsXD>
-[Max Wolff] <https://github.com/maxawolff>
+[Han Bao](https://github.com/han8909227)
+
+[Phillip Werner](https://github.com/philipwerner)
+
+[Brian Wheeler](https://github.com/PoundsXD)
+
+[Max Wolff](https://github.com/maxawolff)
 
 ### Contact Us
 
