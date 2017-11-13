@@ -15,16 +15,20 @@ requires = [
     'pyramid_jinja2',
     'pyramid_retry',
     'pyramid_tm',
+    'ipython',
+    'pyramid_ipython',
     'SQLAlchemy',
     'transaction',
     'zope.sqlalchemy',
     'waitress',
+    'psycopg2',
 ]
 
 tests_require = [
     'WebTest >= 1.3.1',  # py3 compat
     'pytest',
     'pytest-cov',
+    'tox',
 ]
 
 setup(
@@ -38,7 +42,7 @@ setup(
         'Topic :: Internet :: WWW/HTTP',
         'Topic :: Internet :: WWW/HTTP :: WSGI :: Application',
     ],
-    author='',
+    author='Han Bao, Brian Wheeler, Max Wolf, Phil Werner',
     author_email='',
     url='',
     keywords='web pyramid pylons',
@@ -54,7 +58,7 @@ setup(
             'main = TechLurker:main',
         ],
         'console_scripts': [
-            'initialize_TechLurker_db = TechLurker.scripts.initializedb:main',
+            'initdb = TechLurker.scripts.initializedb:main',
         ],
     },
 )
