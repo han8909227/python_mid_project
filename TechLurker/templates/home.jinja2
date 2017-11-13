@@ -10,11 +10,11 @@
         <option value="Companies">Companies</option>
         <option value="Hardware">Hardware</option>
     </select>
-    <button type="submit"><a href="{{ request.route_url('results', id=search.id) }}">Search</a></button>
+    <button type="submit"><a href="{{ request.route_url('results') }}">Search</a></button>
 </form>
 
 <form name="saved_search" method="GET">
-    <button type="submit"><a href="{{ request.route_url('saved_results') }}">View Historical Data</a></button>
+    <button type="submit"><a href="{{ request.route_url('saved_results', id=1) }}">View Historical Data</a></button>
 </form>
 
 {% endblock %}
