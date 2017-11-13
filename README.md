@@ -14,6 +14,7 @@ TechLurker is an app which gives up to date information on all of the latest new
 [Max Wolff](https://github.com/maxawolff)
 
 ##**Routes:**
+
 | Route | Route Name | Description |
 | --- | --- | --- |
 | /  | home | the home page |
