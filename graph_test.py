@@ -29,7 +29,7 @@ def wordcount(data, serach_word):
     return count
 
 
-def generate_chart(words, filename):
+def generate_chart_on_keyword(words, filename):
     """Make a bar chart based on given words."""
     yvalues = []
     data = json_to_list(filename)
@@ -40,6 +40,25 @@ def generate_chart(words, filename):
         y=yvalues)]
     url = offline.plot(chart_data, auto_open=False)
     return url
+
+
+def get_job_locations(filename):
+    """Get the number of jobs by country as a dictionary."""
+    raw_data = json_to_list('python_jobs.json')
+    countries = {}
+    for job in raw_data:
+        location = job['loc']
+        country = location.split()[-1].lower()
+        if country == 'usa' or country == 'states' or country == 'us':
+            countries.setdefault('usa', 0)
+            countries['usa'] += 1
+        elif country == 'uk' or country == 'kingdom' or country == 'england':
+            countries.setdefault('uk', 0)
+            countries['uk'] += 1
+        else:
+            countries.setdefault(country, 0)
+            countries[country] += 1
+    return countries
 
 
 if __name__ == '__main__':
