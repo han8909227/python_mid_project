@@ -20,6 +20,7 @@ TechLurker is an app which gives up to date information on all of the latest new
 | /results | results | Display results from web scrape |
 | /results/{id:\d+} | saved_results | Display historical data from prior scrapes |
 | /about | about | Information on dev team |
+
 ##**Set Up and Installation:**
 Clone this repository to your local machine.
 ```
@@ -31,8 +32,8 @@ $ cd Techlurker
 ```
 Begin a new virtual environment with Python 3 and activate it.
 ```
-pyramid-learning-journal $ python3 -m venv ENV
-pyramid-learning-journal $ source ENV/bin/activate
+TechLurker $ python3 -m venv ENV
+TechLurker $ source ENV/bin/activate
 ```
 [pip](https://pip.pypa.io/en/stable) install this package as well as the testing set of extras into your virtual enviroment.
 ```
