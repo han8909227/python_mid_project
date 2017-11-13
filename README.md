@@ -1,10 +1,10 @@
 # TechLurker
 
 
-### About Our Product
+### About Our Product:
 TechLurker is an app which gives up to date information on all of the latest news in the tech industry. We use a web crawler to get the news from various tech sites and return it to our users in an interesting and easy to understand manner. Choose from one of our built in starting points or input your own favorite site and see what interesting information gets returned to you.
 
-### Meet the Team
+### Meet the Team:
 [Han Bao](https://github.com/han8909227)
 
 [Philip Werner](https://github.com/philipwerner)
@@ -13,7 +13,7 @@ TechLurker is an app which gives up to date information on all of the latest new
 
 [Max Wolff](https://github.com/maxawolff)
 
-##**Routes:**
+### Routes:
 
 | Route | Route Name | Description |
 | --- | --- | --- |
@@ -22,7 +22,7 @@ TechLurker is an app which gives up to date information on all of the latest new
 | /results/{id:\d+} | saved_results | Display historical data from prior scrapes |
 | /about | about | Information on dev team |
 
-##**Set Up and Installation:**
+### Set Up and Installation:
 Clone this repository to your local machine.
 ```
 $ git clone https://github.com/han8909227/TechLurker.git
@@ -50,11 +50,11 @@ Once the package is installed and the database is created, serve the application
 ```
 (ENV) TechLurker $ pserve development.ini
 ```
-##**To Test**
+### To Test:
 If you have the testing extras installed, testing is simple. If you're in the same directory as setup.py type the following:
 $ py.test TechLurker
 
-##**Built With:**
+### Built With:
 [Pyramid Framework](https://trypyramid.com)
 
 [Cookiecutter-PyPackage](https://github.com/audreyr/cookiecutter)
