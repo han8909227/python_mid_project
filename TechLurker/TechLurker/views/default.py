@@ -4,7 +4,7 @@
 from pyramid.view import view_config, view_defaults
 
 
-@view_defaults(renderer='../templates/layout.jinja2')
+@view_defaults(renderer='../templates/home.jinja2')
 class LurkerViews:
     """Class that creates view functions."""
 
