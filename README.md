@@ -7,7 +7,7 @@ TechLurker is an app which gives up to date information on all of the latest new
 ### Meet the Team
 [Han Bao](https://github.com/han8909227)
 
-[Phillip Werner](https://github.com/philipwerner)
+[Philip Werner](https://github.com/philipwerner)
 
 [Brian Wheeler](https://github.com/PoundsXD)
 
@@ -56,5 +56,11 @@ $ py.test TechLurker
 
 ##**Built With:**
 [Pyramid Framework](https://trypyramid.com)
+
 [Cookiecutter-PyPackage](https://github.com/audreyr/cookiecutter)
+
 [Start Bootstrap](https://startbootstrap.com/template-overviews/bare/)
+
+[Scrapy](https://scrapy.org/)
+
+[Plotly](https://plot.ly/)
