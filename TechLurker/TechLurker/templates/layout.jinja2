@@ -11,7 +11,7 @@
     <title>Tech Lurker</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="vendor/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{ request.static_path('TechLurker:static/CSS/css/bootstrap.min.css') }}" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
     <style>
@@ -33,25 +33,19 @@
     <!-- Navigation -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark fixed-top">
       <div class="container">
-        <a class="navbar-brand" href="#">TechLurker</a>
+        <a class="navbar-brand" href="{{ request.route_url('home') }}">TechLurker</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false" aria-label="Toggle navigation">
           <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarResponsive">
           <ul class="navbar-nav ml-auto">
             <li class="nav-item active">
-              <a class="nav-link" href="#">Home
+              <a class="nav-link" href="{{ request.route_url('home') }}">Home
                 <span class="sr-only">(current)</span>
               </a>
             </li>
             <li class="nav-item">
-              <a class="nav-link" href="#">About</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Services</a>
-            </li>
-            <li class="nav-item">
-              <a class="nav-link" href="#">Contact</a>
+              <a class="nav-link" href="{{ request.route_url('about') }}">About</a>
             </li>
           </ul>
         </div>
@@ -60,9 +54,9 @@
 
     {% block content %}
     {% endblock %}
-
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
+    
+    <script src="{{ request.static_path('TechLurker:static/JS/jquery/jquery.min.js') }}"></script>
+    <script src="{{ request.static_path('TechLurker:static/JS/js/bootstrap.bundle.min.js') }}"></script>
 
   </body>
 

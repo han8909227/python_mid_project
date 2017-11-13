@@ -1,7 +1,7 @@
 {% extends 'layout.jinja2' %}
 {% block content %}
 
-<form name="new_search" method="POST">
+<form name="new_search" method="GET">
     <select name="category">
         <option value="ProgrammingLanguages">Programming Languages</option>
         <option value="IT">Information Technology</option>
@@ -10,11 +10,11 @@
         <option value="Companies">Companies</option>
         <option value="Hardware">Hardware</option>
     </select>
-    <button type="submit">Search</button>
+    <button type="submit"><a href="{{ request.route_url('results', id=search.id) }}">Search</a></button>
 </form>
 
 <form name="saved_search" method="GET">
-    <button type="submit">View Historical Data</button>
+    <button type="submit"><a href="{{ request.route_url('saved_results') }}">View Historical Data</a></button>
 </form>
 
 {% endblock %}
