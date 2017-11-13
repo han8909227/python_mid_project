@@ -1,33 +1,33 @@
-from pyramid.response import Response
-from pyramid.view import view_config
-
-from sqlalchemy.exc import DBAPIError
-
-from ..models import MyModel
+"""Configure the views for the page."""
 
 
-@view_config(route_name='home', renderer='../templates/mytemplate.jinja2')
-def my_view(request):
-    try:
-        query = request.dbsession.query(MyModel)
-        one = query.filter(MyModel.name == 'one').first()
-    except DBAPIError:
-        return Response(db_err_msg, content_type='text/plain', status=500)
-    return {'one': one, 'project': 'TechLurker'}
+from pyramid.view import view_config, view_defaults
 
 
-db_err_msg = """\
-Pyramid is having a problem using your SQL database.  The problem
-might be caused by one of the following things:
+@view_defaults(renderer='../templates/layout.jinja2')
+class LurkerViews:
+    """Class that creates view functions."""
 
-1.  You may need to run the "initialize_TechLurker_db" script
-    to initialize your database tables.  Check your virtual
-    environment's "bin" directory for this script and try to run it.
+    def __init__(self, request):
+        """Create an instance of the class."""
+        self.request = request
 
-2.  Your database server may not be running.  Check that the
-    database server referred to by the "sqlalchemy.url" setting in
-    your "development.ini" file is running.
+    @view_config(route_name='home')
+    def home_view(self):
+        """Create the home view."""
+        return {}
 
-After you fix the problem, please restart the Pyramid application to
-try it again.
-"""
+    @view_config(route_name='results', renderer='../templates/results.jinja2')
+    def results_view(self):
+        """Create the new results view."""
+        return {}
+
+    @view_config(route_name='saved_results', renderer='../templates/results.jinja2')
+    def saved_results_view(self):
+        """Create the saved results view."""
+        return {}
+
+    @view_config(route_name='about', renderer='../templates/about.jinja2')
+    def about_view(self):
+        """Create the about us view."""
+        return {}
