@@ -33,3 +33,8 @@ class PostItem(scrapy.Item):
     title = scrapy.Field()
     content = scrapy.Field()
     score = scrapy.Field()
+
+
+class IndeedItem(scrapy.Item):
+    # for indeed
+    title = scrapy.Field()

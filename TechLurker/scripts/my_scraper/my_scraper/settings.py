@@ -13,14 +13,21 @@ BOT_NAME = 'my_scraper'
 
 SPIDER_MODULES = ['my_scraper.spiders']
 NEWSPIDER_MODULE = 'my_scraper.spiders'
-CLOSESPIDER_PAGECOUNT = 500
-
+CLOSESPIDER_PAGECOUNT = 10
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'my_scraper (+http://www.yourdomain.com)'
 
 # Obey robots.txt rules
 ROBOTSTXT_OBEY = True
+
+ITEM_PIPELINES = {
+    'my_scraper.pipelines.AddTablePipeline': 800,
+}
+
+LOG_LEVEL = 'DEBUG'
+LOG_STDOUT = True
+LOG_FILE = 'scrapy.log'
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 100
