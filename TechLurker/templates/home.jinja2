@@ -1,0 +1,20 @@
+{% extends 'layout.jinja2' %}
+{% block content %}
+<div class="search_form">
+    <form name="new_search" method="GET">
+        <select name="category">
+            <option value="ProgrammingLanguages">Programming Languages</option>
+            <option value="IT">Information Technology</option>
+            <option value="Hiring">Job posts</option>
+            <option value="Security">Security</option>
+            <option value="Companies">Companies</option>
+            <option value="Hardware">Hardware</option>
+        </select>
+        <button type="submit"><a href="{{ request.route_url('results') }}">Search</a></button>
+    </form>
+
+    <form name="saved_search" method="GET">
+        <button type="submit"><a href="{{ request.route_url('saved_results', id=1) }}">View Historical Data</a></button>
+    </form>
+</div>
+{% endblock %}
