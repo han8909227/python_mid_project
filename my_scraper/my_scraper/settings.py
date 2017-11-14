@@ -13,6 +13,7 @@ BOT_NAME = 'my_scraper'
 
 SPIDER_MODULES = ['my_scraper.spiders']
 NEWSPIDER_MODULE = 'my_scraper.spiders'
+CLOSESPIDER_PAGECOUNT = 1000
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
@@ -22,7 +23,7 @@ NEWSPIDER_MODULE = 'my_scraper.spiders'
 ROBOTSTXT_OBEY = True
 
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
-#CONCURRENT_REQUESTS = 32
+# CONCURRENT_REQUESTS = 100
 
 # Configure a delay for requests for the same website (default: 0)
 # See http://scrapy.readthedocs.org/en/latest/topics/settings.html#download-delay

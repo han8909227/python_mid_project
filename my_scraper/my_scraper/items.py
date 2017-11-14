@@ -12,9 +12,17 @@ class RecruitItem(scrapy.Item):
     # define the fields for your item here like:
     # name = scrapy.Field()
     title = scrapy.Field()
-    description = scrapy.Field()
-    compensation = scrapy.Field()
-    address = scrapy.Field()
-    employment_type = scrapy.Field()
+    descrip = scrapy.Field()
+    loc = scrapy.Field()
+    job_type = scrapy.Field()
+    url = scrapy.Field()
+
+
+class NewsItem(scrapy.Item):
+    # define the fields for your item here like:
+    # name = scrapy.Field()
+    title = scrapy.Field()
+    articleContent = scrapy.Field()
+    date = scrapy.Field()
     url = scrapy.Field()
 
