@@ -3,7 +3,6 @@
 
 from pyramid.view import view_config, view_defaults
 import graph_test as gt
-import pdb
 
 
 @view_defaults(renderer='../templates/home.jinja2')
