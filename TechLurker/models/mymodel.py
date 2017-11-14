@@ -13,6 +13,8 @@ class TechModel(Base):
 
     __tablename__ = 'jobs'
     id = Column(Integer, primary_key=True)
+    title = Column(Unicode)
+    loc = Column(Unicode)
     description = Column(Unicode)
     url = Column(Unicode)
     compensation = Column(Unicode)
@@ -27,6 +29,8 @@ class TechModel(Base):
         """Take all model attributes and renders them as a dict."""
         return {
             'id': self.id,
+            'title': self.title,
+            'location': self.loc,
             'description': self.description,
             'url': self.url,
             'compensation': self.compensation,
