@@ -24,7 +24,6 @@ class LurkerViews:
         """Create the new results view."""
         dict = gt.get_job_locations('TechLurker/python_jobs.json')
         tag = gt.dict_to_pie_chart_tag(dict)
-        pdb.set_trace()
         return {'tag': tag}
 
     @view_config(route_name='saved_results', renderer='../templates/results.jinja2')
