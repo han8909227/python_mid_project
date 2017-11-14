@@ -13,7 +13,7 @@ BOT_NAME = 'my_scraper'
 
 SPIDER_MODULES = ['my_scraper.spiders']
 NEWSPIDER_MODULE = 'my_scraper.spiders'
-CLOSESPIDER_PAGECOUNT = 1000
+CLOSESPIDER_PAGECOUNT = 100
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent

@@ -20,9 +20,6 @@ class Secuirty_news(scrapy.Spider):
         current_pg = response.url.rsplit('/', 1)
         next_pg = current_pg[0] + '/' + str(int(current_pg[1]) + 1)
         yield Request(next_pg, callback=self.parse)
-        # relative_next_url = response.xpath('//a[contains(@href, "?page=")]/@href')[-1].extract()
-        # absolute_next_url = "https://www.python.org/jobs/" + relative_next_url
-        # yield Request(absolute_next_url, callback=self.parse)
 
     def parse_page(self, response):
         item = NewsItem()
