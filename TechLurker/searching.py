@@ -1,8 +1,8 @@
 """Module for finding word frequency."""
 
-from nltk import Text, word_tokenize, FreqDist
+from nltk import word_tokenize, FreqDist
 from collections import Counter
-from nltk.stem import RegexpStemmer
+# from nltk.stem import RegexpStemmer
 
 
 def count_words(text):
