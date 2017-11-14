@@ -2,6 +2,8 @@
 
 
 from pyramid.view import view_config, view_defaults
+import graph_test as gt
+import pdb
 
 
 @view_defaults(renderer='../templates/home.jinja2')
@@ -20,7 +22,10 @@ class LurkerViews:
     @view_config(route_name='results', renderer='../templates/results.jinja2')
     def results_view(self):
         """Create the new results view."""
-        return {}
+        dict = gt.get_job_locations('TechLurker/python_jobs.json')
+        div = gt.dict_to_pie_chart_tag(dict)
+        return {'tag': div}
+        # return {}
 
     @view_config(route_name='saved_results', renderer='../templates/results.jinja2')
     def saved_results_view(self):
