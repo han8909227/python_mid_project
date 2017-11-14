@@ -56,6 +56,18 @@ def get_job_locations(filename):
     return countries
 
 
+def get_job_types(filename):
+    """Get the number of jobs by country as a dictionary."""
+    raw_data = json_to_list('python_jobs.json')
+    job_types = {}
+    for job in raw_data:
+        types = job['job_type']
+        for item in types:
+            job_types.setdefault(item, 0)
+            job_types[item] += 1
+    return job_types
+
+
 def dict_to_pie_chart_url(dict):
     """Turn dictionary into chart based on kvp."""
     labels = []
