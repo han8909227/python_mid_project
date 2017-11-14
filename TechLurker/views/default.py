@@ -4,7 +4,6 @@
 from pyramid.view import view_config, view_defaults
 import graph_test as gt
 import pdb
-from pyramid.compat import escape
 
 
 @view_defaults(renderer='../templates/home.jinja2')
@@ -25,9 +24,8 @@ class LurkerViews:
         """Create the new results view."""
         dict = gt.get_job_locations('TechLurker/python_jobs.json')
         tag = gt.dict_to_pie_chart_tag(dict)
-        result = escape(tag)
-        return {'tag': result}
-        # return {}
+        pdb.set_trace()
+        return {'tag': tag}
 
     @view_config(route_name='saved_results', renderer='../templates/results.jinja2')
     def saved_results_view(self):
