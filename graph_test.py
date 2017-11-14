@@ -12,11 +12,6 @@ def json_to_list(filename):
     return data
 
 
-# def make_graph_data(data):
-#     """Generate x and y coordinates based on JSON object."""
-#
-
-
 def wordcount(data, serach_word):
     """Return the number of times a word has been used."""
     count = 0
@@ -59,6 +54,18 @@ def get_job_locations(filename):
             countries.setdefault(country, 0)
             countries[country] += 1
     return countries
+
+
+def dict_to_pie_chart(dict):
+    """Turn dictionary into chart based on kvp."""
+    labels = []
+    values = []
+    for key in dict:
+        labels.append(key)
+        values.append(dict[key])
+    trace = go.Pie(labels=labels, values=values)
+    url = offline.plot([trace], auto_open=False)
+    return url
 
 
 if __name__ == '__main__':
