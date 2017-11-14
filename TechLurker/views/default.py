@@ -34,6 +34,12 @@ class LurkerViews:
             job_dict = gt.get_job_types('TechLurker/python_jobs.json')
             tag2 = gt.dict_to_pie_chart_tag(job_dict)
             return {'tag': tag1, 'tag2': tag2}
+        if selected == 'programming_languages':
+            tag = gt.generate_chart_on_keyword(gt.languages, 'reddit_questions.json', gt.wordcount_for_reddit)
+            return {'tag': tag}
+        if selected == 'security':
+            tag = gt.generate_chart_on_keyword(['malware', 'phish', 'infection', 'hacking', 'breach'], 'security.json', gt.wordcount_for_reddit)
+            return {'tag': tag}
         return {}
 
     @view_config(route_name='about', renderer='../templates/about.jinja2')

@@ -33,8 +33,8 @@ def generate_chart_on_keyword(words, filename, count_function):
     chart_data = [go.Bar(
         x=words,
         y=yvalues)]
-    url = py.plot(chart_data, auto_open=False)
-    return url
+    div = offline.plot(chart_data, auto_open=False, output_type='div')
+    return div
 
 
 def get_job_locations(filename):
