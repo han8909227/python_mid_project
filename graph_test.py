@@ -12,24 +12,25 @@ def json_to_list(filename):
     return data
 
 
-def wordcount(data, serach_word):
+def wordcount(data, search_word):
     """Return the number of times a word has been used."""
     count = 0
     for result in data:  # do something which each result from scrape
         for key in result:
+            pdb.set_trace()
             text_list = result[key].split()
             for word in text_list:
-                if word.lower() == serach_word.lower():
+                if word.lower() == search_word.lower():
                     count += 1
     return count
 
 
-def generate_chart_on_keyword(words, filename):
+def generate_chart_on_keyword(words, filename, count_function):
     """Make a bar chart based on given words."""
     yvalues = []
     data = json_to_list(filename)
     for word in words:
-        yvalues.append(wordcount(data, word))
+        yvalues.append(count_function(data, word))
     chart_data = [go.Bar(
         x=words,
         y=yvalues)]
@@ -78,6 +79,25 @@ def dict_to_pie_chart_tag(dict):
     trace = go.Pie(labels=labels, values=values)
     url = offline.plot([trace], auto_open=False, output_type='div')
     return url
+
+
+languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'Go', 'swift', 'kotlin', 'php']
+
+
+def wordcount_for_reddit(data, search_word):
+    """Return the number of times a word has been used."""
+    count = 0
+    for result in data:  # do something which each result from scrape
+        for key in result:
+            stringed_list = str(result[key])
+            text_list = stringed_list.split()
+            for word in text_list:
+                if search_word == 'Go':
+                    if word == search_word:
+                        count += 1
+                elif word.lower() == search_word.lower():
+                    count += 1
+    return count
 
 
 if __name__ == '__main__':
