@@ -1,0 +1,3 @@
+[run]
+source = TechLurker
+omit = TechLurker/test*
