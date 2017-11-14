@@ -4,6 +4,7 @@
 from pyramid.view import view_config, view_defaults
 import graph_test as gt
 import pdb
+from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 
 
 @view_defaults(renderer='../templates/home.jinja2')
@@ -18,26 +19,21 @@ class LurkerViews:
     def home_view(self):
         """Create the home view."""
         if self.request.method == "POST":
-            pdb.set_trace()
+            category = self.request.POST['category'].replace(' ', '_').lower()
+            return HTTPFound(self.request.route_url('results', id=category))
         return {}
 
     @view_config(route_name='results', renderer='../templates/results.jinja2')
     def results_view(self):
-        """Create the new results view."""
-        # if self.request.method == "GET":
-        #     # pdb.set_trace()
-        #     # dict = gt.get_job_locations('TechLurker/python_jobs.json')
-        #     # tag1 = gt.dict_to_pie_chart_tag(dict)
-        #     # job_dict = gt.get_job_types('TechLurker/python_jobs.json')
-        #     # tag2 = gt.dict_to_pie_chart_tag(job_dict)
-        #     # return {'tag': tag1, 'tag2': tag2}
-        #     return {}
-        # if self.request.method == "POST":
-        #     pdb.set_trace()
-
-    @view_config(route_name='saved_results', renderer='../templates/results.jinja2')
-    def saved_results_view(self):
         """Create the saved results view."""
+        url_list = self.request.url.split('/')
+        selected = url_list[-1]
+        if selected == 'job_posts':
+            dict = gt.get_job_locations('TechLurker/python_jobs.json')
+            tag1 = gt.dict_to_pie_chart_tag(dict)
+            job_dict = gt.get_job_types('TechLurker/python_jobs.json')
+            tag2 = gt.dict_to_pie_chart_tag(job_dict)
+            return {'tag': tag1, 'tag2': tag2}
         return {}
 
     @view_config(route_name='about', renderer='../templates/about.jinja2')
