@@ -17,7 +17,6 @@ def wordcount(data, search_word):
     count = 0
     for result in data:  # do something which each result from scrape
         for key in result:
-            pdb.set_trace()
             text_list = result[key].split()
             for word in text_list:
                 if word.lower() == search_word.lower():
@@ -34,7 +33,7 @@ def generate_chart_on_keyword(words, filename, count_function):
     chart_data = [go.Bar(
         x=words,
         y=yvalues)]
-    url = offline.plot(chart_data, auto_open=False)
+    url = py.plot(chart_data, auto_open=False)
     return url
 
 
@@ -65,7 +64,8 @@ def dict_to_pie_chart_url(dict):
         labels.append(key)
         values.append(dict[key])
     trace = go.Pie(labels=labels, values=values)
-    url = offline.plot([trace], auto_open=False)
+    url = py.plot([trace], auto_open=False)
+    # pdb.set_trace()
     return url
 
 
