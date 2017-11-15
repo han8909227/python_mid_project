@@ -5,6 +5,9 @@ from pyramid.view import view_config, view_defaults
 import graph as gt
 import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
+from TechLurker.models.mymodel import AllData, SecurityNewsData, PyjobData
+from TechLurker.searching import count_words as cw
+from TechLurker.searching import parse_job_titles as parse
 
 
 @view_defaults(renderer='../templates/home.jinja2')
@@ -29,16 +32,37 @@ class LurkerViews:
         url_list = self.request.url.split('/')
         selected = url_list[-1]
         if selected == 'job_posts':
-            dict = gt.get_job_locations('TechLurker/python_jobs.json')
+            raw_data = self.request.dbsession.query(PyjobData).all()
+            loc_list = []
+            job_types = []
+            for data in raw_data:
+                loc_list.append(data.loc)
+                job_list = parse(data.job_type)
+                job_types = job_types + job_list
+            # text = text.lower()
+            # word_count = cw(text)
+            dict = gt.get_job_locations_from_db(loc_list)
             tag1 = gt.dict_to_pie_chart_tag(dict)
-            job_dict = gt.get_job_types('TechLurker/python_jobs.json')
+            job_dict = gt.get_job_types_from_db(job_types)
             tag2 = gt.dict_to_pie_chart_tag(job_dict)
             return {'tag': tag1, 'tag2': tag2}
-        if selected == 'programming_languages':
-            tag = gt.generate_chart_on_keyword(gt.languages, 'reddit_questions.json', gt.wordcount_for_reddit)
+        elif selected == 'programming_languages':
+            raw_data = self.request.dbsession.query(AllData).all()
+            text = ''
+            for data in raw_data:
+                text = text + ' ' + data.content
+            text = text.lower()
+            word_count = cw(text)
+            tag = gt.generate_chart_on_keyword_v2(gt.languages, word_count)
             return {'tag': tag}
-        if selected == 'security':
-            tag = gt.generate_chart_on_keyword(['malware', 'phish', 'infection', 'hacking', 'breach'], 'security.json', gt.wordcount_for_reddit)
+        elif selected == 'security':
+            raw_data = self.request.dbsession.query(SecurityNewsData).all()
+            text = ''
+            for data in raw_data:
+                text = text + ' ' + data.articleContent
+            text = text.lower()
+            word_count = cw(text)
+            tag = gt.generate_chart_on_keyword_v2(gt.security, word_count)
             return {'tag': tag}
         return {}
 
