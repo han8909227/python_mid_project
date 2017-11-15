@@ -5,7 +5,7 @@ from pyramid.view import view_config, view_defaults
 import graph as gt
 import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
-from TechLurker.models.mymodel import AllData, SecurityNewsData, PyjobData
+from TechLurker.models.mymodel import RedditData, SecurityNewsData, PyjobData
 from TechLurker.searching import count_words as cw
 from TechLurker.searching import parse_job_titles as parse
 
@@ -47,7 +47,7 @@ class LurkerViews:
             tag2 = gt.dict_to_pie_chart_tag(job_dict)
             return {'tag': tag1, 'tag2': tag2}
         elif selected == 'programming_languages':
-            raw_data = self.request.dbsession.query(AllData).all()
+            raw_data = self.request.dbsession.query(RedditData).all()
             text = ''
             for data in raw_data:
                 text = text + ' ' + data.content
