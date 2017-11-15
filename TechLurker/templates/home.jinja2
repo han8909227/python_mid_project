@@ -1,5 +1,6 @@
 {% extends 'layout.jinja2' %}
 {% block content %}
+<p class="page_intro">Welcome to TechLurker, your one stop location for Tech statistics.</p>
 <div class="search_form">
     <form name="new_search" method="POST">
         <select name="category">
@@ -10,7 +11,7 @@
             <option name="Companies">Companies</option>
             <option name="Hardware">Hardware</option>
         </select>
-        <input type="submit">Search</input>
+        <button class="submit_button" type="submit">Submit</button>
     </form>
 
 </div>
