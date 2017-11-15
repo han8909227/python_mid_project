@@ -47,7 +47,7 @@ class LurkerViews:
             tag2 = gt.dict_to_pie_chart_tag(job_dict)
             return {'tag': tag1, 'tag2': tag2}
         elif selected == 'programming_languages':
-            raw_data = self.request.dbsession.query(AllData).all()
+            raw_data = self.request.dbsession.query(RedditData).all()
             text = ''
             for data in raw_data:
                 text = text + ' ' + data.content
