@@ -1,13 +1,81 @@
-.search_form {
-    border: 1px solid black
-}
 
 footer {
-  padding: 50px 0 65px; }
-  footer .list-inline {
-    margin: 0;
-    padding: 0; }
+    position: absolute;
+    background-color: #4e4e4e;
+    bottom: 0px;
+    left: 0px;
+    width: 100vw;
+    text-align: center;
+    border-top: 2px solid black;
+    padding: 50px 0 65px; }
+    footer .list-inline {
+        margin: 0;
+        padding: 0; }
   footer .copyright {
     font-size: 14px;
     margin-bottom: 0;
     text-align: center; }
+.search_form {
+    width: 50vw;
+    margin-left: 25vw;
+    margin-right: 25vw;
+    position: relative;
+    margin-top: 8vh;
+    height: 100%;
+    line-height: initial !important;
+    padding: 10px;
+    box-sizing: border-box;
+}
+.page_intro {
+    width: 50vw;
+    margin: auto;
+    text-align: center;
+    border-bottom: 2px solid black;
+    margin-top: 2vh;
+}
+.submit_button {
+    float: right;
+    height: 8vh;
+    width: 30%;
+    margin: 0px;
+    box-sizing: border-box;
+    filter: opacity(.75);
+    background-color: #7a5834;
+    border-color: #8b6d41; 
+}
+.category_select {
+    width: 70%;
+    margin: 0%;
+    height: 8vh;
+    background-color: #663d22; 
+    filter: opacity(.75);
+}
+.Lurker_icon {
+    height: 50px;
+    width: 50px;
+    margin-right: 2vw;
+}
+.bg-dark {
+    background-color: #4e4e4e !important;
+}
+.navbar-brand:hover {
+    filter: invert(50%);
+}
+body {
+    background-color: #bf9565; 
+    font-family: TypeWriter;
+    font-size: 20px;
+}
+.embigened_title {
+    font-size: 80px;
+    text-align: center;
+    position: relative;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 4vh;
+    margin-bottom: 0vh;
+    width: 80vw;
+    border-bottom: 2px solid black;
+    font-weight: 500;
+}
+@font-face { font-family: TypeWriter; src: url('linowrite.ttf'); } 
