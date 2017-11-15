@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from pyramid.config import Configurator
-from TechLurker.models import AllData, PyjobData
+from TechLurker.models import AllData, PyjobData, SecurityNewsData
 import os
 
 
@@ -29,29 +29,27 @@ class AddTablePipeline(object):
 
     def process_item(self, item, spider):
         """."""
-        import pdb; pdb.set_trace()
         if 'content' in item.keys():
-            try:
-                record = AllData(title=item['title'],
-                                 content=' '.join(item['content']),
-                                 score=item['score'])
-                self.session.add(record)
-                self.session.commit()
-            except:
-                self.session.rollback()
-        elif 'type' in item.keys():
-            try:
-                import pdb; pdb.set_trace()
-                record = PyjobData(title=item['title'],
-                                   descrip=item['descrip'],
-                                   loc=item['loc'],
-                                   job_type=item['type'],
-                                   url=item['item'])
-                # import pdb; pdb.set_trace()
-                self.session.add(record)
-                self.session.commit(record)
-            except:
-                self.session.rollback()
+            record = AllData(title=item['title'],
+                             content=' '.join(item['content']),
+                             score=item['score'])
+        elif 'job_type' in item.keys():
+            record = PyjobData(title=item['title'],
+                               descrip=' '.join(item['descrip']),
+                               loc=item['loc'],
+                               job_type=' '.join(item['job_type']),
+                               url=item['url'])
+        elif 'articleContent' in item.keys():
+            record = SecurityNewsData(title=item['title'],
+                                      articleContent=item['articleContent'],
+                                      date=item['date'],
+                                      url=item['url'])
+        try:
+            # import pdb; pdb.set_trace()
+            self.session.add(record)
+            self.session.commit()
+        except:
+            self.session.rollback()
         return item
 
     @classmethod

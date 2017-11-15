@@ -27,3 +27,14 @@ class PyjobData(Base):
     loc = Column(String)
     job_type = Column(String)
     url = Column(String)
+
+
+class SecurityNewsData(Base):
+    __tablename__ = 'securitynews'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    articleContent = Column(String)
+    date = Column(String)
+    url = Column(String)
+
