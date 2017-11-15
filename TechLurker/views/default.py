@@ -5,7 +5,7 @@ from pyramid.view import view_config, view_defaults
 import graph as gt
 import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
-from TechLurker.models.mymodel import AllData, SecurityNewsData, PyjobData
+from TechLurker.models.mymodel import RedditData, SecurityNewsData, PyjobData
 from TechLurker.searching import count_words as cw
 from TechLurker.searching import parse_job_titles as parse
 
