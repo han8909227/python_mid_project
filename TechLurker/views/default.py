@@ -2,7 +2,7 @@
 
 
 from pyramid.view import view_config, view_defaults
-import graph_test as gt
+import graph as gt
 import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 
