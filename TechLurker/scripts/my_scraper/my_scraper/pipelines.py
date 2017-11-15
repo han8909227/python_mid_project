@@ -6,12 +6,12 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from pyramid.config import Configurator
+from TechLurker.models import AllData, PyjobData
 import os
-from TechLurker.models import AllData
 
 
 def main():
-    """ This function returns a Pyramid WSGI application.
+    """ This functon returns a Pyramid WSGI application.
     """
     settings = {}
     settings['sqlalchemy.url'] = os.environ['DATABASE_URL']
@@ -29,15 +29,29 @@ class AddTablePipeline(object):
 
     def process_item(self, item, spider):
         """."""
-        record = AllData(title=item['title'],
-                         content=' '.join(item['content']),
-                         score=item['score'])
-
-        try:
-            self.session.add(record)
-            self.session.commit()
-        except:
-            raise ValueError('fail')
+        import pdb; pdb.set_trace()
+        if 'content' in item.keys():
+            try:
+                record = AllData(title=item['title'],
+                                 content=' '.join(item['content']),
+                                 score=item['score'])
+                self.session.add(record)
+                self.session.commit()
+            except:
+                self.session.rollback()
+        elif 'type' in item.keys():
+            try:
+                import pdb; pdb.set_trace()
+                record = PyjobData(title=item['title'],
+                                   descrip=item['descrip'],
+                                   loc=item['loc'],
+                                   job_type=item['type'],
+                                   url=item['item'])
+                # import pdb; pdb.set_trace()
+                self.session.add(record)
+                self.session.commit(record)
+            except:
+                self.session.rollback()
         return item
 
     @classmethod
@@ -50,3 +64,5 @@ class AddTablePipeline(object):
 
     def close_spider(self, spider):
         self.session.close()
+
+

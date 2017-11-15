@@ -25,10 +25,12 @@ ITEM_PIPELINES = {
     'my_scraper.pipelines.AddTablePipeline': 800,
 }
 
-LOG_LEVEL = 'DEBUG'
-LOG_STDOUT = True
-LOG_FILE = 'scrapy.log'
+# LOG_LEVEL = 'DEBUG'
+# LOG_STDOUT = True
+# LOG_FILE = 'scrapy.log'
 
+COOKIES_ENABLED = False
+# DOWNLOAD_DELAY = 2
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 100
 
