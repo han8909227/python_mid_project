@@ -99,6 +99,7 @@ languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'Go', 'swift
 def wordcount_for_reddit(data, search_word):
     """Return the number of times a word has been used."""
     count = 0
+    index_counter = 0
     for result in data:  # do something which each result from scrape
         for key in result:
             stringed_list = str(result[key])
@@ -107,8 +108,16 @@ def wordcount_for_reddit(data, search_word):
                 if search_word == 'Go':
                     if word == search_word:
                         count += 1
+                elif len(search_word.split()) == 2:
+                    try:
+                        if text_list[index_counter + 1] is not None:
+                            if(word + text_list[index_counter + 1]) == search_word:
+                                count += 1
+                    except IndexError:
+                        return count
                 elif word.lower() == search_word.lower():
                     count += 1
+                index_counter += 1
     return count
 
 
