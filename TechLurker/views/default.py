@@ -32,22 +32,26 @@ class LurkerViews:
         url_list = self.request.url.split('/')
         selected = url_list[-1]
         if selected == 'job_posts':
-            raw_data = self.request.dbsession.query(PyjobData).all()
-            loc_list = []
-            job_types = []
+            words = ""
+            raw_data = self.request.dbsession.query(RedditData).all()
             for data in raw_data:
-                loc_list.append(data.loc)
-                job_list = parse(data.job_type)
-                job_types = job_types + job_list
-            # text = text.lower()
-            # word_count = cw(text)
-            dict = gt.get_job_locations_from_db(loc_list)
-            tag1 = gt.dict_to_pie_chart_tag(dict)
-            job_dict = gt.get_job_types_from_db(job_types)
-            tag2 = gt.dict_to_pie_chart_tag(job_dict)
-            return {'tag': tag1, 'tag2': tag2}
+                words = words + data.content
+            pdb.set_trace()
+            # loc_list = []
+            # job_types = []
+            # for data in raw_data:
+            #     loc_list.append(data.loc)
+            #     job_list = parse(data.job_type)
+            #     job_types = job_types + job_list
+            # # text = text.lower()
+            # # word_count = cw(text)
+            # dict = gt.get_job_locations_from_db(loc_list)
+            # tag1 = gt.dict_to_pie_chart_tag(dict)
+            # job_dict = gt.get_job_types_from_db(job_types)
+            # tag2 = gt.dict_to_pie_chart_tag(job_dict)
+            # return {'tag': tag1, 'tag2': tag2}
         elif selected == 'programming_languages':
-            raw_data = self.request.dbsession.query(AllData).all()
+            raw_data = self.request.dbsession.query(RedditData).all()
             text = ''
             for data in raw_data:
                 text = text + ' ' + data.content
