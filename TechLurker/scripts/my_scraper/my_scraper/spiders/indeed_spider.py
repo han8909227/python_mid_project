@@ -1,6 +1,6 @@
 import scrapy
 from scrapy import Request
-from my_scraper.items import IndeedItem
+from TechLurker.scripts.my_scraper.my_scraper.items import IndeedItem
 
 
 class Indeed_spider(scrapy.Spider):

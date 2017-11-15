@@ -9,8 +9,8 @@ from sqlalchemy import (
 from .meta import Base
 
 
-class AllData(Base):
-    __tablename__ = 'alldata'
+class RedditData(Base):
+    __tablename__ = 'redditdata'
 
     id = Column(Integer, primary_key=True)
     title = Column(String)
