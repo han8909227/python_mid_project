@@ -58,7 +58,6 @@ def results_view(request):
         return {'tag': tag}
     return {}
 
-
 @view_config(route_name='about', renderer='../templates/about.jinja2')
 def about_view(request):
     """Create the about us view."""
