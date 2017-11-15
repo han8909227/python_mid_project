@@ -5,10 +5,10 @@ from collections import Counter
 # from nltk.stem import RegexpStemmer
 
 
-def count_words(text):
+def count_words(text, word):
     """Will count all words from inputed text."""
     user_count = 0
-    user_word = 'the'
+    user_word = word
     tokens = word_tokenize(text)
     count = Counter(FreqDist(tokens))
     if user_word in text:
