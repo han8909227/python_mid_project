@@ -6,7 +6,7 @@
 
 def test_count_words_word_found():
     """Function should return number of times given word in text."""
-    from searching import count_words
+    from TechLurker.searching import count_words
     sentance = "The test is a test to test the word test"
     word = 'test'
     assert count_words(sentance, word) == 4
@@ -14,7 +14,7 @@ def test_count_words_word_found():
 
 def test_count_words_word_not_found():
     """Function should return number of times given word in text."""
-    from searching import count_words
+    from TechLurker.searching import count_words
     sentance = "The test is a test to test the word test"
     word = 'strong'
     assert count_words(sentance, word) == 0
