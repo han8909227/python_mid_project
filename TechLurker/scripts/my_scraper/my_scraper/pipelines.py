@@ -37,7 +37,7 @@ class AddTablePipeline(object):
             record = PyjobData(title=item['title'],
                                descrip=' '.join(item['descrip']),
                                loc=item['loc'],
-                               job_type=' '.join(item['job_type']),
+                               job_type=item['job_type'],
                                url=item['url'])
         elif 'articleContent' in item.keys():
             record = SecurityNewsData(title=item['title'],

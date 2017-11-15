@@ -71,6 +71,23 @@ def get_job_locations(filename):
     return countries
 
 
+def get_job_locations_from_db(loc_list):
+    """Get the number of jobs by country as a dictionary."""
+    countries = {}
+    for loc in loc_list:
+        country = loc.split()[-1].lower()
+        if country == 'usa' or country == 'states' or country == 'us':
+            countries.setdefault('usa', 0)
+            countries['usa'] += 1
+        elif country == 'uk' or country == 'kingdom' or country == 'england':
+            countries.setdefault('uk', 0)
+            countries['uk'] += 1
+        else:
+            countries.setdefault(country, 0)
+            countries[country] += 1
+    return countries
+
+
 def get_job_types(filename):
     """Get the number of jobs by country as a dictionary."""
     raw_data = json_to_list('python_jobs.json')
@@ -80,6 +97,15 @@ def get_job_types(filename):
         for item in types:
             job_types.setdefault(item, 0)
             job_types[item] += 1
+    return job_types
+
+
+def get_job_types_from_db(job_list):
+    """Get the number of jobs by country as a dictionary."""
+    job_types = {}
+    for job in job_list:
+        job_types.setdefault(job, 0)
+        job_types[job] += 1
     return job_types
 
 
@@ -109,6 +135,8 @@ def dict_to_pie_chart_tag(dict):
 
 
 languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'swift', 'kotlin', 'php']
+security = ['malware', 'breach', 'hacking', 'phish', 'infection']
+countries = []
 
 
 def wordcount_for_reddit(data, search_word):
