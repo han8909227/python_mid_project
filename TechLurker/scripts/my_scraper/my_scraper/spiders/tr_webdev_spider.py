@@ -3,10 +3,10 @@ from scrapy import Request
 from TechLurker.scripts.my_scraper.my_scraper.items import TechRepulicItem
 
 
-class Tr_security(scrapy.Spider):
-    name = "trSec"
+class Tr_webdev(scrapy.Spider):
+    name = "trWebDev"
     allowed_domains = ["techrepublic.com"]
-    start_urls = ["https://www.techrepublic.com/forums/security/"]
+    start_urls = ["https://www.techrepublic.com/forums/web-development/"]
 
     def parse(self, response):
         posts = response.xpath('//div[@class="discussionTitle"]/a/@href').extract()
@@ -22,5 +22,5 @@ class Tr_security(scrapy.Spider):
         item['title'] = response.xpath('//h3[@data-forum-post]/text()').extract()[0]
         item['content'] = response.xpath('//div[@class="post"]/text()').extract()
         item['votes'] = response.xpath('//span[@class="count"]/text()').extract()[0]
-        item['from_forum'] = 'security'
+        item['from_forum'] = 'web_development'
         yield item
