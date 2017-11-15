@@ -1,20 +1,19 @@
 {% extends 'layout.jinja2' %}
 {% block content %}
+<p class="embigened_title">TechLurker</p>
+<p class="page_intro">Your one stop location for Tech statistics.</p>
 <div class="search_form">
-    <form name="new_search" method="GET">
-        <select name="category">
-            <option value="ProgrammingLanguages">Programming Languages</option>
-            <option value="IT">Information Technology</option>
-            <option value="Hiring">Job posts</option>
-            <option value="Security">Security</option>
-            <option value="Companies">Companies</option>
-            <option value="Hardware">Hardware</option>
+    <form name="new_search" method="POST">
+        <select class="category_select" name="category">
+            <option name="ProgrammingLanguages">Programming Languages</option>
+            <option name="IT">Information Technology</option>
+            <option name="Hiring">Job posts</option>
+            <option name="Security">Security</option>
+            <option name="Companies">Companies</option>
+            <option name="Hardware">Hardware</option>
         </select>
-        <button type="submit"><a href="{{ request.route_url('results') }}">Search</a></button>
+        <button class="submit_button" type="submit">Submit</button>
     </form>
 
-    <form name="saved_search" method="GET">
-        <button type="submit"><a href="{{ request.route_url('saved_results', id=1) }}">View Historical Data</a></button>
-    </form>
 </div>
 {% endblock %}
