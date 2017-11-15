@@ -20,7 +20,7 @@ footer {
     margin-left: 25vw;
     margin-right: 25vw;
     position: relative;
-    margin-top: 20vh;
+    margin-top: 8vh;
     height: 100%;
     line-height: initial !important;
     padding: 10px;
@@ -31,8 +31,7 @@ footer {
     margin: auto;
     text-align: center;
     border-bottom: 2px solid black;
-    position: relative;
-    margin-top: 8vh;
+    margin-top: 2vh;
 }
 .submit_button {
     float: right;
@@ -40,7 +39,7 @@ footer {
     width: 30%;
     margin: 0px;
     box-sizing: border-box;
-    filter: opacity(.80);
+    filter: opacity(.75);
     background-color: #7a5834;
     border-color: #8b6d41; 
 }
@@ -49,7 +48,7 @@ footer {
     margin: 0%;
     height: 8vh;
     background-color: #663d22; 
-    filter: opacity(.80);
+    filter: opacity(.75);
 }
 .Lurker_icon {
     height: 50px;
@@ -66,5 +65,17 @@ body {
     background-color: #bf9565; 
     font-family: TypeWriter;
     font-size: 20px;
+}
+.embigened_title {
+    font-size: 80px;
+    text-align: center;
+    position: relative;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    margin-top: 4vh;
+    margin-bottom: 0vh;
+    width: 80vw;
+    border-bottom: 2px solid black;
+    font-weight: 500;
 }
 @font-face { font-family: TypeWriter; src: url('linowrite.ttf'); } 
