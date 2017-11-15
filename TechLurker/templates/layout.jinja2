@@ -15,6 +15,7 @@
     <link href="{{ request.static_path('TechLurker:static/CSS/css/bootstrap.min.css') }}" rel="stylesheet" />
 
     <!-- Custom styles for this template -->
+    <link href="{{ request.static_path('TechLurker:static/Vendor/font-awesome/css/font-awesome.min.css') }}" rel="stylesheet" />
     <style>
       body {
         padding-top: 54px;
@@ -55,6 +56,34 @@
 
     {% block content %}
     {% endblock %}
+        <!-- Footer -->
+    <footer>
+      <div class="container">
+        <div class="row">
+          <div class="col-lg-8 col-md-10 mx-auto">
+            <ul class="list-inline text-center">
+              <li class="list-inline-item">
+                <a href="https://twitter.com/PyTechLurker">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-twitter fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+              <li class="list-inline-item">
+                <a href="https://github.com/han8909227/TechLurker">
+                  <span class="fa-stack fa-lg">
+                    <i class="fa fa-circle fa-stack-2x"></i>
+                    <i class="fa fa-github fa-stack-1x fa-inverse"></i>
+                  </span>
+                </a>
+              </li>
+            </ul>
+            <p class="copyright text-muted">Copyright &copy; TechLurker 2017</p>
+          </div>
+        </div>
+      </div>
+    </footer>
     
     <script src="{{ request.static_path('TechLurker:static/JS/jquery/jquery.min.js') }}"></script>
     <script src="{{ request.static_path('TechLurker:static/JS/js/bootstrap.bundle.min.js') }}"></script>
