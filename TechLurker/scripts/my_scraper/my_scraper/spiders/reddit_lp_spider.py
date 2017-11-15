@@ -1,7 +1,7 @@
 import scrapy
 from scrapy import Request
-# from my_scraper.items import PostItem
-from TechLurker.scripts.my_scraper.my_scraper.items import PostItem
+# from my_scraper.items import RedditItem
+from TechLurker.scripts.my_scraper.my_scraper.items import RedditItem
 
 
 class Reddit_lp(scrapy.Spider):
@@ -20,7 +20,7 @@ class Reddit_lp(scrapy.Spider):
         yield Request(next_url, callback=self.parse)
 
     def parse_page(self, response):
-        item = PostItem()
+        item = RedditItem()
         item['title'] = response.xpath('//p[@class="title"]/a/text()').extract_first()
         item['score'] = response.xpath('//div[@class="score"]/span/text()').extract_first()
         item['content'] = response.xpath('//form/div[contains(@class, "md-container")]/div[@class="md"]/p/text()').extract()[9:]

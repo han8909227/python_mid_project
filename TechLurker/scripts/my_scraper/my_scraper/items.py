@@ -27,7 +27,7 @@ class NewsItem(scrapy.Item):
     url = scrapy.Field()
 
 
-class PostItem(scrapy.Item):
+class RedditItem(scrapy.Item):
     """Reddit forums only."""
 
     title = scrapy.Field()
