@@ -15,6 +15,7 @@ SPIDER_MODULES = ['TechLurker.scripts.my_scraper.my_scraper.spiders']
 NEWSPIDER_MODULE = 'TechLurker.scripts.my_scraper.my_scraper.spiders'
 CLOSESPIDER_PAGECOUNT = 20
 
+
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'my_scraper (+http://www.yourdomain.com)'
 
