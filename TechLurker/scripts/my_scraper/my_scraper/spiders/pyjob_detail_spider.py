@@ -1,6 +1,6 @@
 import scrapy
 from scrapy import Request
-from my_scraper.items import RecruitItem
+from TechLurker.scripts.my_scraper.my_scraper.items import RecruitItem
 
 
 class PyjobSpider_detail(scrapy.Spider):

@@ -1,6 +1,7 @@
 import scrapy
 from scrapy import Request
-from my_scraper.items import PostItem
+# from my_scraper.items import PostItem
+from TechLurker.scripts.my_scraper.my_scraper.items import PostItem
 
 
 class Reddit_lp(scrapy.Spider):
