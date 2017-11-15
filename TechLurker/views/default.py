@@ -6,7 +6,7 @@ import graph as gt
 import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from TechLurker.models.mymodel import AllData
-from TechLurker.searching import count_words
+from TechLurker.searching import count_words as cw
 
 
 @view_defaults(renderer='../templates/home.jinja2')
@@ -37,9 +37,13 @@ class LurkerViews:
             tag2 = gt.dict_to_pie_chart_tag(job_dict)
             return {'tag': tag1, 'tag2': tag2}
         if selected == 'programming_languages':
-            pdb.set_trace()
             raw_data = self.request.dbsession.query(AllData).all()
-            tag = gt.generate_chart_on_keyword(gt.languages, 'reddit_questions.json', gt.wordcount_for_reddit)
+            text = ''
+            for data in raw_data:
+                text = text + ' ' + data.content
+            text = text.lower()
+            word_count = cw(text)
+            tag = gt.generate_chart_on_keyword_v2(gt.languages, word_count)
             return {'tag': tag}
         if selected == 'security':
             tag = gt.generate_chart_on_keyword(['malware', 'phish', 'infection', 'hacking', 'breach'], 'security.json', gt.wordcount_for_reddit)

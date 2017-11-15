@@ -5,18 +5,11 @@ from collections import Counter
 # from nltk.stem import RegexpStemmer
 
 
-def count_words(text, word):
+def count_words(text):
     """Will count all words from inputed text."""
-    user_count = 0
-    user_word = word
     tokens = word_tokenize(text)
     count = Counter(FreqDist(tokens))
-    if user_word in text:
-        word_count = count.get(user_word)
-        user_count += word_count
-    else:
-        user_count = 0
-    return user_count
+    return count
 
 
 # def find_root_word(text):

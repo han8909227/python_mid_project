@@ -37,6 +37,21 @@ def generate_chart_on_keyword(words, filename, count_function):
     return div
 
 
+def generate_chart_on_keyword_v2(words, counter):
+    """Make a bar chart based on given words."""
+    from TechLurker.searching import count_words as cw
+    xvals = []
+    yvalues = []
+    for word in words:
+        xvals.append(word)
+        yvalues.append(counter.get(word))
+    chart_data = [go.Bar(
+        x=xvals,
+        y=yvalues)]
+    div = offline.plot(chart_data, auto_open=False, output_type='div')
+    return div
+
+
 def get_job_locations(filename):
     """Get the number of jobs by country as a dictionary."""
     raw_data = json_to_list('python_jobs.json')
@@ -93,7 +108,7 @@ def dict_to_pie_chart_tag(dict):
     return url
 
 
-languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'Go', 'swift', 'kotlin', 'php']
+languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'swift', 'kotlin', 'php']
 
 
 def wordcount_for_reddit(data, search_word):

@@ -13,7 +13,7 @@ BOT_NAME = 'my_scraper'
 
 SPIDER_MODULES = ['my_scraper.spiders']
 NEWSPIDER_MODULE = 'my_scraper.spiders'
-CLOSESPIDER_PAGECOUNT = 10
+CLOSESPIDER_PAGECOUNT = 500
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
 #USER_AGENT = 'my_scraper (+http://www.yourdomain.com)'
@@ -30,7 +30,7 @@ ITEM_PIPELINES = {
 # LOG_FILE = 'scrapy.log'
 
 COOKIES_ENABLED = False
-# DOWNLOAD_DELAY = 2
+DOWNLOAD_DELAY = 2
 # Configure maximum concurrent requests performed by Scrapy (default: 16)
 # CONCURRENT_REQUESTS = 100
 
