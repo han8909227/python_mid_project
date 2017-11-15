@@ -50,7 +50,6 @@ class AddTablePipeline(object):
                                       votes=item['votes'],
                                       from_forum=item['from_forum'])
         try:
-            # import pdb; pdb.set_trace()
             self.session.add(record)
             self.session.commit()
         except:
