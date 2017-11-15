@@ -6,7 +6,7 @@
 # See: http://doc.scrapy.org/en/latest/topics/item-pipeline.html
 
 from pyramid.config import Configurator
-from TechLurker.models import AllData, PyjobData, SecurityNewsData
+from TechLurker.models import AllData, PyjobData, SecurityNewsData, TechRepublicData
 import os
 
 
@@ -29,21 +29,26 @@ class AddTablePipeline(object):
 
     def process_item(self, item, spider):
         """."""
-        if 'content' in item.keys():
+        if 'score' in item.keys():  # Reddit data
             record = AllData(title=item['title'],
                              content=' '.join(item['content']),
                              score=item['score'])
-        elif 'job_type' in item.keys():
+        elif 'job_type' in item.keys():  # pyjob data
             record = PyjobData(title=item['title'],
                                descrip=' '.join(item['descrip']),
                                loc=item['loc'],
                                job_type=item['job_type'],
                                url=item['url'])
-        elif 'articleContent' in item.keys():
+        elif 'articleContent' in item.keys():  # security news data
             record = SecurityNewsData(title=item['title'],
                                       articleContent=item['articleContent'],
                                       date=item['date'],
                                       url=item['url'])
+        elif 'votes' in item.keys():  # tech republic data
+            record = TechRepublicData(title=item['title'],
+                                      content=item['content'],
+                                      votes=item['votes'],
+                                      from_forum=item['from_forum'])
         try:
             # import pdb; pdb.set_trace()
             self.session.add(record)

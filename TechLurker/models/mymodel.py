@@ -38,3 +38,12 @@ class SecurityNewsData(Base):
     date = Column(String)
     url = Column(String)
 
+
+class TechRepublicData(Base):
+    __tablename__ = 'tr'
+
+    id = Column(Integer, primary_key=True)
+    title = Column(String)
+    content = Column(String)
+    votes = Column(String)
+    from_forum = Column(String)

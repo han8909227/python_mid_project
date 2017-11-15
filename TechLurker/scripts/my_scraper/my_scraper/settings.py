@@ -25,6 +25,10 @@ ITEM_PIPELINES = {
     'my_scraper.pipelines.AddTablePipeline': 800,
 }
 
+
+EXTENSIONS = {
+    'scrapy.telnet.TelnetConsole': None
+}
 # LOG_LEVEL = 'DEBUG'
 # LOG_STDOUT = True
 # LOG_FILE = 'scrapy.log'
