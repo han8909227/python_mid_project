@@ -48,6 +48,16 @@
 
 {% endif %}
 
+{% if result=='webdev' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+</select>
+
+{% endif %}
+
 <script>
 
     jQuery(document).ready(function(){
@@ -92,5 +102,9 @@
 {%  endfor %}
 </ul>
 {% endif %}
+
+
+<h3>Data Generated From</h3>
+<a href='{{ url }}'>{{ site_name }}</a>
 
 {% endblock %}

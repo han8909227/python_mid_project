@@ -43,7 +43,7 @@ class LurkerViews:
             tag1 = gt.dict_to_pie_chart_tag(dict, "Programming Jobs by Country")
             job_dict = gt.get_job_types_from_db(job_types)
             tag2 = gt.dict_to_pie_chart_tag(job_dict, "Programming Job Types")
-            return {'tag': tag1, 'tag2': tag2, 'result': 'job'}
+            return {'tag': tag1, 'tag2': tag2, 'result': 'job', 'url': 'https://www.python.org/jobs/', 'site_name': 'python.org/jobs'}
 
         elif selected == 'programming_languages':
             raw_data = self.request.dbsession.query(RedditData).all()
@@ -54,7 +54,7 @@ class LurkerViews:
             word_count = cw(text)
             tag = gt.generate_chart_on_keyword_v2(gt.languages, word_count, 'Language Popularity')
             tag2 = gt.generate_pie_chart_on_keyword(gt.languages, word_count, "Language Popularity")
-            return {'tag': tag, 'tag2': tag2, 'result': 'language'}
+            return {'tag': tag, 'tag2': tag2, 'result': 'language', 'url': 'https://www.reddit.com/r/learnprogramming/', 'site_name': 'Reddit'}
 
         elif selected == 'security':
             raw_data = self.request.dbsession.query(SecurityNewsData).all()
@@ -65,7 +65,7 @@ class LurkerViews:
             word_count = cw(text)
             tag = gt.generate_chart_on_keyword_v2(gt.security, word_count, 'security')
             tag2 = gt.generate_pie_chart_on_keyword(gt.security, word_count, "security")
-            return {'tag': tag, 'tag2': tag2, 'result': 'security'}
+            return {'tag': tag, 'tag2': tag2, 'result': 'security', 'url': 'https://www.trendmicro.com/vinfo/us/security/news/all/page/2', 'site_name': 'trendmicro.com'}
 
         elif selected == 'programming_questions':
             raw_data = self.request.dbsession.query(RedditData).all()
@@ -80,7 +80,7 @@ class LurkerViews:
             tag = gt.generate_chart_on_keyword_v2(search_terms, word_count, 'Most asked programming questions')
             tag2 = gt.generate_pie_chart_on_keyword(search_terms, word_count, "Most asked programming questions")
             del top.container[0]
-            return {'tag': tag, 'tag2': tag2, 'top': top.container, 'result': 'questions'}
+            return {'tag': tag, 'tag2': tag2, 'top': top.container, 'result': 'questions', 'url': 'https://www.reddit.com/r/learnprogramming/', 'site_name': 'Reddit'}
 
         elif selected == 'webdev':
             raw_data = self.request.dbsession.query(TechRepublicData).all()
@@ -88,8 +88,12 @@ class LurkerViews:
             for post in raw_data:
                 if post.from_forum == "web_development":
                     web_data = web_data + post.content + ' '
+            text = web_data.lower()
             word_count = cw(web_data)
-            pdb.set_trace()
+            search_terms = ['development', 'application', 'website', 'database', 'server', 'wordpress', 'javascript', 'node', 'hosting', 'search']
+            tag = gt.generate_chart_on_keyword_v2(search_terms, word_count, 'Trending terms in web development')
+            tag2 = gt.generate_pie_chart_on_keyword(search_terms, word_count, "Trending terms in web development")
+            return {'tag': tag, 'tag2': tag2, 'result': 'webdev', 'url': "https://www.techrepublic.com/forums/web-development/", 'site_name': 'TechRepublic/webdev'}
         return {}
 
     @view_config(route_name='about', renderer='../templates/about.jinja2')
