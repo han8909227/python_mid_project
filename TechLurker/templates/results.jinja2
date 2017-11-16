@@ -2,15 +2,88 @@
 
 
 {% block content %}
-
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
 {# <iframe src="{{ url }}"></iframe> #}
 {# <a href="{{ url }}"> link to graph </a> #}
+{% if result=='language' %}
 
-{{ tag|safe }}
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+</select>
 
-{{ tag2|safe }}
+{% endif %}
 
-<h2>Top posts from the programming subreddits</h2>
+{% if result=='job' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="job_locations">Job Locations</option>
+    <option value="job_type">Job Type</option>
+</select>
+
+{% endif %}
+
+{% if result=='security' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+</select>
+
+{% endif %}
+
+{% if result=='questions' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+</select>
+
+{% endif %}
+
+<script>
+
+    jQuery(document).ready(function(){
+        $("#tag1").hide()
+        $("#tag2").hide()
+        $("#select").change(function(){
+            if (this.value == 'bar'){
+                $("#tag1").show()
+                $("#tag2").hide()
+            }
+            else if (this.value == 'pie'){
+                $("#tag1").hide()
+                $("#tag2").show()
+            }
+            else if (this.value == 'job_locations'){
+                $("#tag1").show()
+                $("#tag2").hide()
+            }
+            else if (this.value == 'job_type'){
+                $("#tag1").hide()
+                $("#tag2").show()
+            }
+             else if (this.value == 'questions'){
+                $("#tag1").hide()
+                $("#tag2").show()
+            }
+        })
+    })
+</script>
+
+<div id="tag1">{{ tag|safe }}</div>
+<div id="tag2">{{ tag2|safe }}</div>
+
+{% if result=='questions' %}
+
+<h2>Top posts from the <a href='https://www.reddit.com/r/learnprogramming/'>programming subreddits</h2></a>
 <ul>
 {% for post in top %}
 
@@ -18,4 +91,6 @@
 
 {%  endfor %}
 </ul>
+{% endif %}
+
 {% endblock %}
