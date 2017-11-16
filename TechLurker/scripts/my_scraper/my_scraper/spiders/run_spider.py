@@ -16,9 +16,10 @@ from TechLurker.scripts.my_scraper.my_scraper.spiders.security_news_spider impor
 
 # from scrapy.utils.project import get_project_settings
 from scrapy.settings import Settings
-
+import nltk
 
 def spider_crawl():
+    nltk.download('punkt')
     settings = Settings()
 
     configure_logging()

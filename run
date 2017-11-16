@@ -1,7 +1,6 @@
 #!/bin/bash
 set -e
 python setup.py develop
-nltk.download('punkt')
 scrapedata
 python runapp.py
 
