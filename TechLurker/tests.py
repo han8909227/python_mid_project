@@ -16,30 +16,6 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from TechLurker.views.default import home_view, results_view, about_view
 
 
-# def test_count_words_word_found():
-#     """Function should return number of times given word in text."""
-#     from TechLurker.searching import count_words
-#     sentance = "The test is a test to test the word test"
-#     word = 'test'
-#     assert count_words(sentance, word) == 4
-
-
-# def test_count_words_word_not_found():
-#     """Function should return number of times given word in text."""
-#     from TechLurker.searching import count_words
-#     sentance = "The test is a test to test the word test"
-#     word = 'strong'
-#     assert count_words(sentance, word) == 0
-
-
-# def test_count_words_with_numbers():
-#     """Can this function find numbers too?."""
-#     from TechLurker.searching import count_words
-#     sentance = "The number of the day is 4"
-#     word = '4'
-#     assert count_words(sentance, word) == 1
-
-
 @pytest.fixture(scope='session')
 def configuration(request):
     """Set up a Configurator instance.
@@ -52,7 +28,7 @@ def configuration(request):
     This configuration will persist for the entire duration of your PyTest run.
     """
     config = testing.setUp(settings={
-        'sqlalchemy.url': 'postgres://postgres:postgres@localhost:5432/testlurker'
+        'sqlalchemy.url': 'postgres://postgres:postgres@localhost:5432/test_db'
     })
     config.include("TechLurker.models")
     config.include("TechLurker.routes")
@@ -117,6 +93,12 @@ def test_home_page(dummy_request):
 def test_results_page(dummy_request):
     """Test index return list of journals."""
     response = results_view(dummy_request)
+    assert response == {}
+
+
+def test_about_page(dummy_request):
+    """Test about page is loaded."""
+    response = about_view(dummy_request)
     assert response == {}
 
 
@@ -259,7 +241,7 @@ def test_results_page(dummy_request):
 #         testapp.post('/journal/new-entry', {})
 
 
-
+"""Searching module test."""
 def test_count_words_word_found():
     """Function should return number of times given word in text."""
     from TechLurker.searching import count_words
@@ -284,6 +266,7 @@ def test_parse_job_titles():
     assert result == ['Back end', 'Front end', 'Web', 'Developer / Engineer']
 
 
+"""Graph module tests."""
 def test_chart_on_keyword_returns_chart():
     """Test that html is generated for the chart."""
     from graph import generate_chart_on_keyword_v2
@@ -299,3 +282,5 @@ def test_chart_on_keyword_returns_type_error_if_no_data():
     from TechLurker.searching import count_words
     with pytest.raises(TypeError):
         generate_chart_on_keyword_v2(count_words)
+
+
