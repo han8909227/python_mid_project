@@ -24,6 +24,7 @@
     <option selected="selected"></option>
     <option value="job_locations">Job Locations</option>
     <option value="job_type">Job Type</option>
+    <option value="data">Data</option>
 </select>
 
 {% endif %}
@@ -61,35 +62,43 @@
 <script>
 
     jQuery(document).ready(function(){
-        $("#tag1").hide()
         $("#tag2").hide()
+        $("#data").hide()
         $("#select").change(function(){
             if (this.value == 'bar'){
                 $("#tag1").show()
                 $("#tag2").hide()
+                $("#data").hide()
             }
             else if (this.value == 'pie'){
                 $("#tag1").hide()
                 $("#tag2").show()
+                $("#data").hide()
             }
             else if (this.value == 'job_locations'){
                 $("#tag1").show()
                 $("#tag2").hide()
+                $("data").hide()
             }
             else if (this.value == 'job_type'){
                 $("#tag1").hide()
                 $("#tag2").show()
+                $("#data").hide()
             }
-             else if (this.value == 'questions'){
+            else if (this.value == 'data'){
                 $("#tag1").hide()
-                $("#tag2").show()
+                $("#tag2").hide()
+                $("#data").show()
             }
         })
     })
 </script>
 
+
+
 <div id="tag1">{{ tag|safe }}</div>
 <div id="tag2">{{ tag2|safe }}</div>
+
 
 {% if result=='questions' %}
 
@@ -106,5 +115,15 @@
 
 <h3>Data Generated From</h3>
 <a href='{{ url }}'>{{ site_name }}</a>
+
+<div id=data>
+    {% for title in titles %}
+
+    <div>{{title}}</div>
+
+    {%  endfor %}
+</div>
+
+
 
 {% endblock %}

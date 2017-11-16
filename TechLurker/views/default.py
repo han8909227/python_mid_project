@@ -33,17 +33,19 @@ class LurkerViews:
         selected = url_list[-1]
         if selected == 'job_posts':
             raw_data = self.request.dbsession.query(PyjobData).all()
+            job_titles = []
             loc_list = []
             job_types = []
             for data in raw_data:
                 loc_list.append(data.loc)
                 job_list = parse(data.job_type)
                 job_types = job_types + job_list
+                job_titles.append(data.title)
             dict = gt.get_job_locations_from_db(loc_list)
             tag1 = gt.dict_to_pie_chart_tag(dict, "Programming Jobs by Country")
             job_dict = gt.get_job_types_from_db(job_types)
             tag2 = gt.dict_to_pie_chart_tag(job_dict, "Programming Job Types")
-            return {'tag': tag1, 'tag2': tag2, 'result': 'job', 'url': 'https://www.python.org/jobs/', 'site_name': 'python.org/jobs'}
+            return {'tag': tag1, 'tag2': tag2, 'result': 'job', 'url': 'https://www.python.org/jobs/', 'site_name': 'python.org/jobs', 'data': job_titles}
 
         elif selected == 'programming_languages':
             raw_data = self.request.dbsession.query(RedditData).all()
@@ -54,7 +56,7 @@ class LurkerViews:
             word_count = cw(text)
             tag = gt.generate_chart_on_keyword_v2(gt.languages, word_count, 'Language Popularity')
             tag2 = gt.generate_pie_chart_on_keyword(gt.languages, word_count, "Language Popularity")
-            return {'tag': tag, 'tag2': tag2, 'result': 'language', 'url': 'https://www.reddit.com/r/learnprogramming/', 'site_name': 'Reddit'}
+            return {'tag': tag, 'tag2': tag2, 'result': 'language', 'url': 'https://www.reddit.com/r/learnprogramming/', 'site_name': 'Reddit' }
 
         elif selected == 'security':
             raw_data = self.request.dbsession.query(SecurityNewsData).all()
@@ -70,7 +72,6 @@ class LurkerViews:
             security_text = security_data.lower()
             text = text + ' ' + security_text
             word_count = cw(text)
-            pdb.set_trace()
             tag = gt.generate_chart_on_keyword_v2(gt.security, word_count, 'security')
             tag2 = gt.generate_pie_chart_on_keyword(gt.security, word_count, "security")
             return {'tag': tag, 'tag2': tag2, 'result': 'security', 'url': 'https://www.trendmicro.com/vinfo/us/security/news/all/page/2', 'site_name': 'trendmicro.com'}
