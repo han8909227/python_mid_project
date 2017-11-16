@@ -37,7 +37,7 @@ def generate_chart_on_keyword(words, filename, count_function):
     return div
 
 
-def generate_chart_on_keyword_v2(words, counter):
+def generate_chart_on_keyword_v2(words, counter, title):
     """Make a bar chart based on given words."""
     from TechLurker.searching import count_words as cw
     xvals = []
@@ -48,8 +48,47 @@ def generate_chart_on_keyword_v2(words, counter):
     chart_data = [go.Bar(
         x=xvals,
         y=yvalues)]
-    div = offline.plot(chart_data, auto_open=False, output_type='div')
+    layout = go.Layout(
+        title=title
+    )
+    fig = go.Figure(data=chart_data, layout=layout)
+    div = offline.plot(fig, auto_open=False, output_type='div')
     return div
+
+
+def generate_pie_chart_on_keyword(words, counter, title):
+    """Make a bar chart based on given words."""
+    from TechLurker.searching import count_words as cw
+    xvals = []
+    yvalues = []
+    for word in words:
+        xvals.append(word)
+        yvalues.append(counter.get(word))
+    chart_data = [go.Pie(
+        labels=xvals,
+        values=yvalues)]
+    layout = go.Layout(
+        title=title
+    )
+    fig = go.Figure(data=chart_data, layout=layout)
+    div = offline.plot(fig, auto_open=False, output_type='div')
+    return div
+
+
+def dict_to_pie_chart_tag(dict, title):
+    """Turn dictionary into chart based on kvp."""
+    labels = []
+    values = []
+    for key in dict:
+        labels.append(key)
+        values.append(dict[key])
+    trace = [go.Pie(labels=labels, values=values)]
+    layout = go.Layout(
+        title=title
+    )
+    fig = go.Figure(data=trace, layout=layout)
+    url = offline.plot(fig, auto_open=False, output_type='div')
+    return url
 
 
 def get_job_locations(filename):
@@ -122,20 +161,8 @@ def dict_to_pie_chart_url(dict):
     return url
 
 
-def dict_to_pie_chart_tag(dict):
-    """Turn dictionary into chart based on kvp."""
-    labels = []
-    values = []
-    for key in dict:
-        labels.append(key)
-        values.append(dict[key])
-    trace = go.Pie(labels=labels, values=values)
-    url = offline.plot([trace], auto_open=False, output_type='div')
-    return url
-
-
 languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'swift', 'kotlin', 'php']
-security = ['malware', 'breach', 'hacking', 'phish', 'infection']
+security = ['malware', 'breach', 'hackers', 'network', 'access', 'attacks', 'ip', 'ransomware', 'password', 'vulnerabilities', 'threat']
 countries = []
 
 

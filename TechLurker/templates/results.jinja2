@@ -2,12 +2,151 @@
 
 
 {% block content %}
-
+<script
+  src="https://code.jquery.com/jquery-3.2.1.js"
+  integrity="sha256-DZAnKJ/6XZ9si04Hgrsxu/8s717jcIzLy3oi35EouyE="
+  crossorigin="anonymous"></script>
 {# <iframe src="{{ url }}"></iframe> #}
 {# <a href="{{ url }}"> link to graph </a> #}
+{% if result=='language' %}
 
-{{ tag|safe }}
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
+</select>
 
-{{ tag2|safe }}
+{% endif %}
+
+{% if result=='job' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="job_locations">Job Locations</option>
+    <option value="job_type">Job Type</option>
+    <option value="data">Data</option>
+</select>
+
+{% endif %}
+
+{% if result=='security' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
+</select>
+
+{% endif %}
+
+{% if result=='questions' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
+</select>
+
+{% endif %}
+
+{% if result=='webdev' %}
+
+<select id='select'>
+    <option selected="selected"></option>
+    <option value="bar">Bar Graph</option>
+    <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
+</select>
+
+{% endif %}
+
+<script>
+
+    jQuery(document).ready(function(){
+        $("#tag2").hide()
+        $("#data").hide()
+        $("#select").change(function(){
+            if (this.value == 'bar'){
+                $("#tag1").show()
+                $("#tag2").hide()
+                $("#data").hide()
+            }
+            else if (this.value == 'pie'){
+                $("#tag1").hide()
+                $("#tag2").show()
+                $("#data").hide()
+            }
+            else if (this.value == 'job_locations'){
+                $("#tag1").show()
+                $("#tag2").hide()
+                $("data").hide()
+            }
+            else if (this.value == 'job_type'){
+                $("#tag1").hide()
+                $("#tag2").show()
+                $("#data").hide()
+            }
+            else if (this.value == 'data'){
+                $("#tag1").hide()
+                $("#tag2").hide()
+                $("#data").show()
+            }
+        })
+    })
+</script>
+
+
+
+<div id="tag1">{{ tag|safe }}</div>
+<div id="tag2">{{ tag2|safe }}</div>
+
+
+<h3>Data Generated From</h3>
+<a href='{{ url }}'>{{ site_name }}</a>
+
+
+{% if result=='job' %}
+<div id=data>
+    {% for post in data %}
+
+    <div>{{post}}</div>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
+{% if result=='language' or result=='questions' %}
+<div id=data>
+    {% for post in data %}
+
+    <div>Title: {{post[0]}} || Score: {{post[1]}}</div>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
+{% if result=='security'%}
+<div id=data>
+    {% for post in data %}
+
+    <a href={{post[1]}}><div>Title: {{post[0]}}</div></a>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
+{% if result=='webdev'%}
+<div id=data>
+    {% for post in data %}
+
+    <div>Title: {{post}}</div>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
 
 {% endblock %}
