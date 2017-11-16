@@ -4,3 +4,4 @@ python setup.py develop
 initdb production.ini
 python TechLurker/scripts/my_scraper/my_scraper/spiders/run_spider.py 
 python runapp.py
+

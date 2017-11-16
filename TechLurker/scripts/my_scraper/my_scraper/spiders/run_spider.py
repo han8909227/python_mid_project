@@ -3,6 +3,7 @@ import os
 from twisted.internet import reactor, defer
 from scrapy.crawler import CrawlerRunner
 from scrapy.utils.log import configure_logging
+
 from TechLurker.scripts.my_scraper.my_scraper.spiders.reddit_lp_spider import Reddit_lp
 from TechLurker.scripts.my_scraper.my_scraper.spiders.reddit_dp_spider import Reddit_dp
 from TechLurker.scripts.my_scraper.my_scraper.spiders.tr_employment_spider import Tr_employment
@@ -12,6 +13,7 @@ from TechLurker.scripts.my_scraper.my_scraper.spiders.tr_os_win_spider import Tr
 from TechLurker.scripts.my_scraper.my_scraper.spiders.tr_software_spider import Tr_software
 from TechLurker.scripts.my_scraper.my_scraper.spiders.pyjob_detail_spider import PyjobSpider_detail
 from TechLurker.scripts.my_scraper.my_scraper.spiders.security_news_spider import Secuirty_news
+
 # from scrapy.utils.project import get_project_settings
 from scrapy.settings import Settings
 
@@ -35,4 +37,3 @@ def crawl():
 
 crawl()
 reactor.run()  # the script will block here until the last crawl call is finished
-
