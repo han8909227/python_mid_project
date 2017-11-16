@@ -16,24 +16,26 @@ from TechLurker.scripts.my_scraper.my_scraper.spiders.security_news_spider impor
 
 # from scrapy.utils.project import get_project_settings
 from scrapy.settings import Settings
+import nltk
 
-settings = Settings()
+def spider_crawl():
+    nltk.download('punkt')
+    settings = Settings()
 
-configure_logging()
+    configure_logging()
 
-setting_path = os.environ.get('PROJ_PATH')
-settings.setmodule(setting_path, priority='project')
+    setting_path = os.environ.get('PROJ_PATH')
+    settings.setmodule(setting_path, priority='project')
 
-runner = CrawlerRunner(settings)
+    runner = CrawlerRunner(settings)
 
-spiders = [Reddit_lp, Reddit_dp, PyjobSpider_detail, Tr_employment, Tr_security, Tr_software, Tr_os_win, Tr_webdev, Secuirty_news]
+    spiders = [Reddit_lp, Reddit_dp, PyjobSpider_detail, Tr_employment, Tr_security, Tr_software, Tr_os_win, Tr_webdev, Secuirty_news]
 
+    @defer.inlineCallbacks
+    def crawl():
+        for spider in spiders:
+            yield runner.crawl(spider)
+        reactor.stop()
 
-@defer.inlineCallbacks
-def crawl():
-    for spider in spiders:
-        yield runner.crawl(spider)
-    reactor.stop()
-
-crawl()
-reactor.run()  # the script will block here until the last crawl call is finished
+    crawl()
+    reactor.run()  # the script will block here until the last crawl call is finished

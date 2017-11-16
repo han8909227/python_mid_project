@@ -24,6 +24,7 @@ jupyter-core==4.4.0
 lxml==4.1.1
 Mako==1.0.7
 MarkupSafe==1.0
+mock
 nbformat==4.4.0
 nltk==3.2.5
 parsel==1.2.0
@@ -59,14 +60,12 @@ pytz==2017.3
 queuelib==1.4.2
 repoze.lru==0.7
 requests==2.18.4
+setuptools
 Scrapy==1.4.0
-scrapyd==1.0.1
-scrapy-heroku==0.7.1
 service-identity==17.0.0
 simplegeneric==0.8.1
 six==1.11.0
 SQLAlchemy==1.1.15
--e git+https://github.com/han8909227/TechLurker.git@45e4535440f16bc778f72d5e3cd768e7a82e89a8#egg=TechLurker
 tox==2.9.1
 traitlets==4.3.2
 transaction==2.1.2
