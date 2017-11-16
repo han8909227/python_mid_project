@@ -271,9 +271,11 @@ def test_chart_on_keyword_returns_chart():
     """Test that html is generated for the chart."""
     from graph import generate_chart_on_keyword_v2
     from TechLurker.searching import count_words
-    data = ['a', 'b', 'c', 'a', 'a', 'b']
-    results = generate_chart_on_keyword_v2(data, count_words)
-    assert '<h1>' in results
+    text = 'a b c d e f g h'
+    word_count = count_words(text)
+    data = ['a', 'b', 'c']
+    results = generate_chart_on_keyword_v2(data, word_count)
+    assert '<div>' in results
 
 
 def test_chart_on_keyword_returns_type_error_if_no_data():
