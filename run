@@ -1,0 +1,6 @@
+#!/bin/bash
+set -e
+python setup.py develop
+# initdb production.ini
+scrapy crawl redditlp
+python runapp.py
