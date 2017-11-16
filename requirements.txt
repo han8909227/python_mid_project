@@ -61,8 +61,6 @@ repoze.lru==0.7
 requests==2.18.4
 setuptools
 Scrapy==1.4.0
-scrapyd==1.0.1
-scrapy-heroku==0.7.1
 service-identity==17.0.0
 simplegeneric==0.8.1
 six==1.11.0
