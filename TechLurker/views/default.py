@@ -62,7 +62,15 @@ class LurkerViews:
             for data in raw_data:
                 text = text + ' ' + data.articleContent
             text = text.lower()
+            raw_data = self.request.dbsession.query(TechRepublicData).all()
+            security_data = ''
+            for post in raw_data:
+                if post.from_forum == "security":
+                    security_data = security_data + post.content + ' '
+            security_text = security_data.lower()
+            text = text + ' ' + security_text
             word_count = cw(text)
+            pdb.set_trace()
             tag = gt.generate_chart_on_keyword_v2(gt.security, word_count, 'security')
             tag2 = gt.generate_pie_chart_on_keyword(gt.security, word_count, "security")
             return {'tag': tag, 'tag2': tag2, 'result': 'security', 'url': 'https://www.trendmicro.com/vinfo/us/security/news/all/page/2', 'site_name': 'trendmicro.com'}

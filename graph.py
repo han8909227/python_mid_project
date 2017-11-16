@@ -162,7 +162,7 @@ def dict_to_pie_chart_url(dict):
 
 
 languages = ['python', 'c', 'java', 'c++', 'c#', 'r', 'javascript', 'swift', 'kotlin', 'php']
-security = ['malware', 'breach', 'hacking', 'phish', 'infection']
+security = ['malware', 'breach', 'hackers', 'network', 'access', 'attacks', 'ip', 'ransomware', 'password', 'vulnerabilities', 'threat']
 countries = []
 
 
