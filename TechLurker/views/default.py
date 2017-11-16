@@ -3,28 +3,19 @@
 
 from pyramid.view import view_config, view_defaults
 import graph as gt
-import pdb
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound
 from TechLurker.models.mymodel import RedditData, SecurityNewsData, PyjobData, TechRepublicData
 from TechLurker.searching import count_words as cw
 from TechLurker.searching import parse_job_titles as parse
 
 
-@view_defaults(renderer='../templates/home.jinja2')
-class LurkerViews:
-    """Class that creates view functions."""
-
-    def __init__(self, request):
-        """Create an instance of the class."""
-        self.request = request
-
-    @view_config(route_name='home')
-    def home_view(self):
-        """Create the home view."""
-        if self.request.method == "POST":
-            category = self.request.POST['category'].replace(' ', '_').lower()
-            return HTTPFound(self.request.route_url('results', id=category))
-        return {}
+@view_config(route_name='home', renderer='../templates/home.jinja2')
+def home_view(request):
+    """Create the home view."""
+    if request.method == "POST":
+        category = request.POST['category'].replace(' ', '_').lower()
+        return HTTPFound(request.route_url('results', id=category))
+    return {}
 
     @view_config(route_name='results', renderer='../templates/results.jinja2')
     def results_view(self):
@@ -114,8 +105,8 @@ class LurkerViews:
             tag2 = gt.generate_pie_chart_on_keyword(search_terms, word_count, "Trending terms in web development")
             return {'tag': tag, 'tag2': tag2, 'result': 'webdev', 'url': "https://www.techrepublic.com/forums/web-development/", 'site_name': 'TechRepublic/webdev', 'data': raw_web_data}
         return {}
-
-    @view_config(route_name='about', renderer='../templates/about.jinja2')
-    def about_view(self):
-        """Create the about us view."""
-        return {}
+      
+@view_config(route_name='about', renderer='../templates/about.jinja2')
+def about_view(request):
+    """Create the about us view."""
+    return {}

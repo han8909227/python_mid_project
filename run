@@ -1,6 +1,7 @@
 #!/bin/bash
 set -e
 python setup.py develop
-# initdb production.ini
-scrapy crawl redditlp
+initdb production.ini
+python TechLurker/scripts/my_scraper/my_scraper/spiders/run_spider.py 
 python runapp.py
+

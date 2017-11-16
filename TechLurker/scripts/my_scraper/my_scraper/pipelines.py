@@ -11,8 +11,7 @@ import os
 
 
 def main():
-    """ This functon returns a Pyramid WSGI application.
-    """
+    """ This functon returns a Pyramid WSGI application."""
     settings = {}
     settings['sqlalchemy.url'] = os.environ['DATABASE_URL']
     config = Configurator(settings=settings)
@@ -49,13 +48,13 @@ class AddTablePipeline(object):
                                       content=item['content'],
                                       votes=item['votes'],
                                       from_forum=item['from_forum'])
-        try:
-            # import pdb; pdb.set_trace()
-            self.session.add(record)
-            self.session.commit()
-        except:
-            self.session.rollback()
-        return item
+        if not check_repeat(self.session, record):
+            try:
+                self.session.add(record)
+                self.session.commit()
+            except:
+                self.session.rollback()
+            return item
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -69,3 +68,11 @@ class AddTablePipeline(object):
         self.session.close()
 
 
+def check_repeat(db, record):
+    """Check for repeats by comparing them in the database."""
+    models = [TechRepublicData, SecurityNewsData, PyjobData, RedditData]
+    temp = db.query(*models)
+
+    for model in models:
+        if temp.filter(model.title == record.title).count():
+            return True

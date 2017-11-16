@@ -1,1 +1,2 @@
 web: ./run
+web: scrapyd

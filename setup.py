@@ -29,6 +29,9 @@ tests_require = [
     'pytest',
     'pytest-cov',
     'tox',
+    'nltk',
+    'scrapy',
+    'plotly'
 ]
 
 setup(
