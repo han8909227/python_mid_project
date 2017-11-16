@@ -68,6 +68,20 @@ class LurkerViews:
             word_count = cw(text)
             tag = gt.generate_chart_on_keyword_v2(gt.security, word_count)
             return {'tag': tag}
+        elif selected == 'programming_questions':
+            raw_data = self.request.dbsession.query(RedditData).all()
+            top = gt.TopFive()
+            text = ''
+            for data in raw_data:
+                text = text + ' ' + data.content
+                top.add_new_post(data)
+            pdb.set_trace()
+            text = text.lower()
+            word_count = cw(text)
+            search_terms = ['algorithm', 'sequence', 'memory', 'search', 'efficient', 'functions', 'generate', 'syntax', 'optimize']
+            tag = gt.generate_chart_on_keyword_v2(search_terms, word_count)
+            del top.container[0]
+            return {'tag': tag, 'top': top.container}
         return {}
 
     @view_config(route_name='about', renderer='../templates/about.jinja2')

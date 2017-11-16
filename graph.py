@@ -164,6 +164,33 @@ def wordcount_for_reddit(data, search_word):
     return count
 
 
+class TopFive(object):
+    """Class to hold the top ten reddit posts."""
+
+    def __init__(self):
+        """Init for top ten object."""
+        self.container = [('title', -1), ('title', -1), ('title', -1), ('title', -1), ('title', -1), ('title', -1)]
+        self.lowest = 4
+
+    def add_new_post(self, post):
+        """Check if a post has a higher score and add it if so."""
+        if int(post.score) > self.container[self.lowest][1]:
+            del self.container[self.lowest]
+            self.container.append((post.title, int(post.score)))
+        lowest = self.find_lowest_score()
+        self.lowest = lowest
+
+    def find_lowest_score(self):
+        """Find the lowest scoring post."""
+        lowest = 100000
+        index = -1
+        for idx, post in enumerate(self.container):
+            if post[1] < lowest:
+                lowest = post[1]
+                index = idx
+        return index
+
+
 if __name__ == '__main__':
     data = json_to_list('example.json')
     count1 = wordcount(data, 'and')

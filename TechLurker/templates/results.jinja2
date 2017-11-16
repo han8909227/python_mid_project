@@ -10,4 +10,12 @@
 
 {{ tag2|safe }}
 
+<h2>Top posts from the programming subreddits</h2>
+<ul>
+{% for post in top %}
+
+<p>Title: {{ post[0] }} Score: {{ post[1] }}</p>
+
+{%  endfor %}
+</ul>
 {% endblock %}
