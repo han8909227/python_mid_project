@@ -14,6 +14,7 @@
     <option selected="selected"></option>
     <option value="bar">Bar Graph</option>
     <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
 </select>
 
 {% endif %}
@@ -35,6 +36,7 @@
     <option selected="selected"></option>
     <option value="bar">Bar Graph</option>
     <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
 </select>
 
 {% endif %}
@@ -45,6 +47,7 @@
     <option selected="selected"></option>
     <option value="bar">Bar Graph</option>
     <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
 </select>
 
 {% endif %}
@@ -55,6 +58,7 @@
     <option selected="selected"></option>
     <option value="bar">Bar Graph</option>
     <option value="pie">Pie Chart</option>
+    <option value="data">Data</option>
 </select>
 
 {% endif %}
@@ -100,30 +104,49 @@
 <div id="tag2">{{ tag2|safe }}</div>
 
 
-{% if result=='questions' %}
-
-<h2>Top posts from the <a href='https://www.reddit.com/r/learnprogramming/'>programming subreddits</h2></a>
-<ul>
-{% for post in top %}
-
-<p>Title: {{ post[0] }} Score: {{ post[1] }}</p>
-
-{%  endfor %}
-</ul>
-{% endif %}
-
-
 <h3>Data Generated From</h3>
 <a href='{{ url }}'>{{ site_name }}</a>
 
-<div id=data>
-    {% for title in titles %}
 
-    <div>{{title}}</div>
+{% if result=='job' %}
+<div id=data>
+    {% for post in data %}
+
+    <div>{{post}}</div>
 
     {%  endfor %}
 </div>
+{% endif %}
 
+{% if result=='language' or result=='questions' %}
+<div id=data>
+    {% for post in data %}
+
+    <div>Title: {{post[0]}} || Score: {{post[1]}}</div>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
+{% if result=='security'%}
+<div id=data>
+    {% for post in data %}
+
+    <a href={{post[1]}}><div>Title: {{post[0]}}</div></a>
+
+    {%  endfor %}
+</div>
+{% endif %}
+
+{% if result=='webdev'%}
+<div id=data>
+    {% for post in data %}
+
+    <div>Title: {{post}}</div>
+
+    {%  endfor %}
+</div>
+{% endif %}
 
 
 {% endblock %}
