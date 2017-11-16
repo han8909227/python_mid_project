@@ -62,6 +62,7 @@ setup(
         ],
         'console_scripts': [
             'initdb = TechLurker.scripts.initializedb:main',
+            'scrapedata = TechLurker.scripts.my_scraper.my_scraper.spiders.run_spider:spider_crawl',
         ],
     },
 )

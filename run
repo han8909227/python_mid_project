@@ -1,5 +1,6 @@
 #!/bin/bash
 set -e
 python setup.py develop
+scrapedata
 python runapp.py
 
