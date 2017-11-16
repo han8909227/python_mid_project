@@ -66,7 +66,6 @@ service-identity==17.0.0
 simplegeneric==0.8.1
 six==1.11.0
 SQLAlchemy==1.1.15
--e git+https://github.com/han8909227/TechLurker.git@45e4535440f16bc778f72d5e3cd768e7a82e89a8#egg=TechLurker
 tox==2.9.1
 traitlets==4.3.2
 transaction==2.1.2
