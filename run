@@ -1,6 +1,6 @@
 #!/bin/bash
 set -e
 python setup.py develop
+initdb production.ini
 scrapedata
 python runapp.py
-
