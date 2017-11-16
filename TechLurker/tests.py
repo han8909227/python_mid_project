@@ -303,7 +303,7 @@ def test_get_job_locations_from_db(dummy_request):
 
 
 def test_get_job_type_from_db(dummy_request):
-    """Test that job locations are collected from data."""
+    """Test that job types are collected from data."""
     from graph import get_job_types_from_db
     job_types = ['backend', 'AI']
     new_lock = PyjobData(
