@@ -49,12 +49,13 @@ class AddTablePipeline(object):
                                       content=item['content'],
                                       votes=item['votes'],
                                       from_forum=item['from_forum'])
-        try:
-            self.session.add(record)
-            self.session.commit()
-        except:
-            self.session.rollback()
-        return item
+        if not checkRepeat(self.session, record):
+            try:
+                self.session.add(record)
+                self.session.commit()
+            except:
+                self.session.rollback()
+            return item
 
     @classmethod
     def from_crawler(cls, crawler):
@@ -68,3 +69,10 @@ class AddTablePipeline(object):
         self.session.close()
 
 
+def checkRepeat(db, record):
+    models = [TechRepublicData, SecurityNewsData, PyjobData, RedditData]
+    temp = db.query(*models)
+
+    for model in models:
+        if temp.filter(model.title == record.title).count():
+            return True
