@@ -78,4 +78,31 @@ body {
     border-bottom: 2px solid black;
     font-weight: 500;
 }
+.App_description {
+    width: 80vw;
+    margin: auto;
+}
+.about_us {
+    font-size: 30px;
+    text-align: center;
+    width: 80vw;
+    margin-top: 3vh;
+    margin-left: 10vw;
+    margin-right: 10vw;
+    border-bottom: 2px solid black;
+}
+.profile {
+    width: 200px;
+    height: 200px;
+}
+.bio_box {
+    display: inline-block;
+    width: 20vw;
+    height: 20vh;
+    margin: auto;
+}
+.bio_container {
+    display: flex;
+    text-align: center;
+}
 @font-face { font-family: TypeWriter; src: url('linowrite.ttf'); } 
