@@ -47,7 +47,7 @@ setup(
     ],
     author='Han Bao, Brian Wheeler, Max Wolf, Phil Werner',
     author_email='',
-    url='',
+    url='https://techlurker.herokuapp.com/',
     keywords='web pyramid pylons',
     packages=find_packages(),
     include_package_data=True,
