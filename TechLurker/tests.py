@@ -72,18 +72,6 @@ def dummy_request(db_session):
     return testing.DummyRequest(dbsession=db_session)
 
 
-# @pytest.fixture
-# def new_journal():
-#     """Provide a fixture for one journal."""
-#     new = MyModel(
-#         id=1,
-#         title=u'test journal',
-#         body=u'test_body',
-#         creation_date=datetime.now()
-#     )
-#     return new
-
-
 def test_home_page(dummy_request):
     """Test index return list of journals."""
     response = home_view(dummy_request)
@@ -94,15 +82,6 @@ def test_about_page(dummy_request):
     """Test about page is loaded."""
     response = about_view(dummy_request)
     assert response == {}
-
-
-# def test_detail_view_shows_journal_detail(dummy_request, new_journal):
-#     """Test detail view show journal details."""
-#     dummy_request.dbsession.add(new_journal)
-#     dummy_request.dbsession.commit()
-#     dummy_request.matchdict['id'] = 1
-#     response = detail_view(dummy_request)
-#     assert response['Journal'] == new_journal.to_dict()
 
 
 @pytest.fixture(scope="session")
@@ -133,106 +112,6 @@ def testapp(request):
 
     request.addfinalizer(tearDown)
     return TestApp(app)
-
-
-# FAKE = Faker()
-# JOURNALS = []
-# for i in range(9):
-#     journals = MyModel(
-#         id=i,
-#         title=FAKE.file_name(),
-#         body=FAKE.paragraph(),
-#         creation_date=FAKE.date_time()
-#     )
-#     JOURNALS.append(journals)
-
-
-# @pytest.fixture(scope="session")
-# def fill_the_db(testapp):
-#     """Fill the db with fake journal entries."""
-#     SessionFactory = testapp.app.registry["dbsession_factory"]
-#     with transaction.manager:
-#         dbsession = get_tm_session(SessionFactory, transaction.manager)
-#         dbsession.add_all(JOURNALS)
-
-
-# def test_home_route_has_table(testapp):
-#     """Test route has table."""
-#     response = testapp.get("/")
-#     assert len(response.html.find_all('table')) == 1
-#     assert len(response.html.find_all('tr')) == 1
-
-
-# def test_home_route_with_journals_has_rows(testapp, fill_the_db):
-#     """Test home route has rows."""
-#     response = testapp.get("/")
-#     assert len(response.html.find_all('tr')) == 10
-
-
-# def test_detail_route_with_journal_detail(testapp, fill_the_db):
-#     """Test if detail papge has proper response.."""
-#     response = testapp.get("/journal/1")
-#     assert 'ID: 1' in response.ubody
-
-
-# @pytest.fixture
-# def journal_info():
-#     """Create a info dictionary for edit or create later."""
-#     info = {
-#         'title': 'testing',
-#         'body': 'testing_body',
-#         'creation_date': '2017-11-02'
-#     }
-#     return info
-
-
-# @pytest.fixture
-# def edit_info():
-#     """Create a dict for editing purpose."""
-#     info = {
-#         'title': 'edited journal',
-#         'body': 'I just changed the journal created in above test',
-#         'creation_date': ''
-#     }
-#     return info
-
-
-# def test_create_view_successful_post_redirects_home(testapp, journal_info):
-#     """Test create view directs to same loc."""
-#     response = testapp.post("/journal/new-entry", journal_info)
-#     assert response.location == 'http://localhost/'
-
-
-# def test_create_view_successful_post_actually_shows_home_page(testapp, journal_info):
-#     """Test create view folow up with detail page."""
-#     response = testapp.post("/journal/new-entry", journal_info)
-#     next_page = response.follow()
-#     assert "testing" in next_page.ubody
-
-
-# def test_edit_method_successful_updates(testapp, edit_info):
-#     """Test if content is updated successfully."""
-#     response = testapp.post('/journal/1/edit-entry', edit_info)
-#     next_page = response.follow()
-#     assert 'edited journal' in next_page.ubody
-
-
-# def test_edit_method_successful_updates_and_directs_detail_view(testapp, edit_info):
-#     """Test after updating we get re-directed to detail view."""
-#     response = testapp.post('/journal/1/edit-entry', edit_info)
-#     assert response.location == 'http://localhost/journal/1'
-
-
-# def test_edit_method_return_httpnotfound(testapp, edit_info):
-#     """Assert if a http not found error(raised by apperror) is popped from invalid post req."""
-#     with pytest.raises(AppError):
-#         testapp.post('/journal/200/edit-entry', edit_info)
-
-
-# def test_create_method_return_httpnotfound_with_no_var(testapp):
-#     """Assert if a http not found error(raised by apperror) is popped from invalid post req."""
-#     with pytest.raises(AppError):
-#         testapp.post('/journal/new-entry', {})
 
 
 """Searching module test."""
