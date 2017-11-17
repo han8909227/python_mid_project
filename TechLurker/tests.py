@@ -16,6 +16,7 @@ from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 from TechLurker.views.default import home_view, results_view, about_view
 import pdb
 
+
 @pytest.fixture(scope='session')
 def configuration(request):
     """Set up a Configurator instance.
@@ -115,6 +116,8 @@ def testapp(request):
 
 
 """Searching module test."""
+
+
 def test_count_words_word_found():
     """Function should return number of times given word in text."""
     from TechLurker.searching import count_words
@@ -140,6 +143,8 @@ def test_parse_job_titles():
 
 
 """Graph module tests."""
+
+
 def test_chart_on_keyword_returns_chart():
     """Test that html is generated for the chart."""
     from graph import generate_chart_on_keyword_v2
@@ -285,3 +290,186 @@ def test_get_results_webdev_doesnt_have_incorrect(testapp):
     """Get request to results/webdev."""
     response = testapp.get('/results/webdev')
     assert 'Reddit' not in response.ubody
+
+
+def test_db_had_model_pyjob_title(dummy_request):
+    """Pyjob data should have title stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(PyjobData).all()
+    assert response[0].title == 'test_title'
+
+
+def test_db_had_model_pyjob_url(dummy_request):
+    """Pyjob data should have url stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(PyjobData).all()
+    assert response[0].url == 'randome.com'
+
+
+def test_db_stores_redditdata_title(dummy_request):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(RedditData).all()
+    assert response[0].title == 'A_Post'
+
+
+def test_db_stores_redditdata_content(dummy_request):
+    """Redditdata data should have content stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(RedditData).all()
+    assert response[0].content == 'This is a reddit post'
+
+
+def test_db_stores_securitydata_date(dummy_request):
+    """Securitynewsdata should have date stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].date == '11/17/2017'
+
+
+def test_db_stores_securitydata_title(dummy_request):
+    """Securitynewsdata should have title stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].title == 'Security Yo'
+
+
+def test_db_stores_techrepublicdata_from_forum(dummy_request):
+    """Techrepublicdata should have from_forum stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(TechRepublicData).all()
+    assert response[0].from_forum == 'webdev'
+
+
+def test_db_stores_techrepublicdata_title(dummy_request):
+    """Techrepublicdata should have title stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(TechRepublicData).all()
+    assert response[0].title == 'tech newz'
+
+
+def test_view_has_result_from_database_pyjobdata(dummy_request, testapp):
+    """Pyjob data should have title stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/job_posts')
+    assert 'python.org/jobs' in response.ubody
+
+
+def test_view_has_result_from_database_redditdata_pl(dummy_request, testapp):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/programming_languages')
+    assert 'Reddit' in response.ubody
+
+
+def test_view_has_result_from_database_security(dummy_request, testapp):
+    """Securitynewsdata should have date stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].date == '11/17/2017'
+    response = testapp.get('/results/security')
+    assert 'trendmicro' in response.ubody
+
+
+def test_view_has_result_from_database_redditdata_pq(dummy_request, testapp):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/programming_questions')
+    assert 'Reddit' in response.ubody
+
+
+def test_view_has_result_from_database_tr_webdev(dummy_request, testapp):
+    """Techrepublicdata should have from_forum stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/webdev')
+    assert 'TechRepublic/webdev' in response.ubody

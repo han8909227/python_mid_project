@@ -1,10 +1,10 @@
 [run]
 source = TechLurker
+         ../graph
 
-omit = 
+omit =
     TechLurker/scripts*
     TechLurker/__init__
-
 
 
 [report]

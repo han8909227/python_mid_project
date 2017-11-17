@@ -27,6 +27,7 @@ MarkupSafe==1.0
 mock
 nbformat==4.4.0
 nltk==3.2.5
+passlib==1.7.1
 parsel==1.2.0
 parso==0.1.0
 PasteDeploy==1.5.2

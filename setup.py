@@ -22,6 +22,10 @@ requires = [
     'zope.sqlalchemy',
     'waitress',
     'psycopg2',
+    'nltk',
+    'scrapy',
+    'plotly',
+    'passlib'
 ]
 
 tests_require = [
@@ -31,7 +35,8 @@ tests_require = [
     'tox',
     'nltk',
     'scrapy',
-    'plotly'
+    'plotly',
+    'passlib'
 ]
 
 setup(
