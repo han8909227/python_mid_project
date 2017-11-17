@@ -348,7 +348,7 @@ def test_post_to_job_raise_404(testapp):
         assert '404 Not Found' in err.args[0]
 
 
-def test_post_redirects_to_result_page(testapp):
+def est_get_results_job_posts(testapp):
     """Post to results/jobs should redirect to results page."""
     response = testapp.get('/results/job_posts')
     assert 'python.org/jobs' in response.ubody
@@ -376,3 +376,33 @@ def test_get_results_webdev(testapp):
     """Get request to results/webdev."""
     response = testapp.get('/results/webdev')
     assert 'TechRepublic/webdev' in response.ubody
+
+
+def test_get_results_job_posts_doesnt_have_incorrect(testapp):
+    """Post to results/jobs should redirect to results page."""
+    response = testapp.get('/results/job_posts')
+    assert 'TechRepublic/webdev' not in response.ubody
+
+
+def test_get_results_programming_languages_doesnt_have_incorrect(testapp):
+    """Get request to results/prgoraming_languages."""
+    response = testapp.get('/results/programming_languages')
+    assert 'trendmicro' not in response.ubody
+
+
+def test_get_results_security_doesnt_have_incorrect(testapp):
+    """Get request to results/security."""
+    response = testapp.get('/results/security')
+    assert 'Reddit' not in response.ubody
+
+
+def test_get_results_programming_questions_doesnt_have_incorrect(testapp):
+    """Get request to results/programming_questions."""
+    response = testapp.get('/results/programming_questions')
+    assert 'TechRepublic/webdev' not in response.ubody
+
+
+def test_get_results_webdev_doesnt_have_incorrect(testapp):
+    """Get request to results/webdev."""
+    response = testapp.get('/results/webdev')
+    assert 'Reddit' not in response.ubody
