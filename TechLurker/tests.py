@@ -14,6 +14,7 @@ from webtest.app import AppError
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 # from faker import Faker
 from TechLurker.views.default import home_view, results_view, about_view
+import pdb
 
 
 @pytest.fixture(scope='session')
@@ -28,7 +29,7 @@ def configuration(request):
     This configuration will persist for the entire duration of your PyTest run.
     """
     config = testing.setUp(settings={
-        'sqlalchemy.url': 'postgres://localhost:5432/test_db'
+        'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
     })
     config.include("TechLurker.models")
     config.include("TechLurker.routes")
@@ -72,27 +73,9 @@ def dummy_request(db_session):
     return testing.DummyRequest(dbsession=db_session)
 
 
-# @pytest.fixture
-# def new_journal():
-#     """Provide a fixture for one journal."""
-#     new = MyModel(
-#         id=1,
-#         title=u'test journal',
-#         body=u'test_body',
-#         creation_date=datetime.now()
-#     )
-#     return new
-
-
 def test_home_page(dummy_request):
     """Test index return list of journals."""
     response = home_view(dummy_request)
-    assert response == {}
-
-
-def test_results_page(dummy_request):
-    """Test index return list of journals."""
-    response = results_view(dummy_request)
     assert response == {}
 
 
@@ -102,146 +85,39 @@ def test_about_page(dummy_request):
     assert response == {}
 
 
-# def test_detail_view_shows_journal_detail(dummy_request, new_journal):
-#     """Test detail view show journal details."""
-#     dummy_request.dbsession.add(new_journal)
-#     dummy_request.dbsession.commit()
-#     dummy_request.matchdict['id'] = 1
-#     response = detail_view(dummy_request)
-#     assert response['Journal'] == new_journal.to_dict()
+@pytest.fixture(scope="session")
+def testapp(request):
+    """Initialte teh test app."""
+    from webtest import TestApp
+    from pyramid.config import Configurator
 
+    def main():
+        settings = {
+            'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
+        }  # points to a database
+        config = Configurator(settings=settings)
+        config.include('pyramid_jinja2')
+        config.include('TechLurker.routes')
+        config.include('TechLurker.models')
+        config.scan()
+        return config.make_wsgi_app()
 
-# @pytest.fixture(scope="session")
-# def testapp(request):
-#     """Initialte teh test app."""
-#     from webtest import TestApp
-#     from pyramid.config import Configurator
+    app = main()
 
-#     def main():
-#         settings = {
-#             'sqlalchemy.url': 'postgres://postgres:postgres@localhost:5432/testjournals'
-#         }  # points to a database
-#         config = Configurator(settings=settings)
-#         config.include('pyramid_jinja2')
-#         config.include('learning_journal.routes')
-#         config.include('learning_journal.models')
-#         config.scan()
-#         return config.make_wsgi_app()
+    SessionFactory = app.registry["dbsession_factory"]
+    engine = SessionFactory().bind
+    Base.metadata.create_all(bind=engine)  # builds the tables
 
-#     app = main()
+    def tearDown():
+        Base.metadata.drop_all(bind=engine)
 
-#     SessionFactory = app.registry["dbsession_factory"]
-#     engine = SessionFactory().bind
-#     Base.metadata.create_all(bind=engine)  # builds the tables
-
-#     def tearDown():
-#         Base.metadata.drop_all(bind=engine)
-
-#     request.addfinalizer(tearDown)
-#     return TestApp(app)
-
-
-# FAKE = Faker()
-# JOURNALS = []
-# for i in range(9):
-#     journals = MyModel(
-#         id=i,
-#         title=FAKE.file_name(),
-#         body=FAKE.paragraph(),
-#         creation_date=FAKE.date_time()
-#     )
-#     JOURNALS.append(journals)
-
-
-# @pytest.fixture(scope="session")
-# def fill_the_db(testapp):
-#     """Fill the db with fake journal entries."""
-#     SessionFactory = testapp.app.registry["dbsession_factory"]
-#     with transaction.manager:
-#         dbsession = get_tm_session(SessionFactory, transaction.manager)
-#         dbsession.add_all(JOURNALS)
-
-
-# def test_home_route_has_table(testapp):
-#     """Test route has table."""
-#     response = testapp.get("/")
-#     assert len(response.html.find_all('table')) == 1
-#     assert len(response.html.find_all('tr')) == 1
-
-
-# def test_home_route_with_journals_has_rows(testapp, fill_the_db):
-#     """Test home route has rows."""
-#     response = testapp.get("/")
-#     assert len(response.html.find_all('tr')) == 10
-
-
-# def test_detail_route_with_journal_detail(testapp, fill_the_db):
-#     """Test if detail papge has proper response.."""
-#     response = testapp.get("/journal/1")
-#     assert 'ID: 1' in response.ubody
-
-
-# @pytest.fixture
-# def journal_info():
-#     """Create a info dictionary for edit or create later."""
-#     info = {
-#         'title': 'testing',
-#         'body': 'testing_body',
-#         'creation_date': '2017-11-02'
-#     }
-#     return info
-
-
-# @pytest.fixture
-# def edit_info():
-#     """Create a dict for editing purpose."""
-#     info = {
-#         'title': 'edited journal',
-#         'body': 'I just changed the journal created in above test',
-#         'creation_date': ''
-#     }
-#     return info
-
-
-# def test_create_view_successful_post_redirects_home(testapp, journal_info):
-#     """Test create view directs to same loc."""
-#     response = testapp.post("/journal/new-entry", journal_info)
-#     assert response.location == 'http://localhost/'
-
-
-# def test_create_view_successful_post_actually_shows_home_page(testapp, journal_info):
-#     """Test create view folow up with detail page."""
-#     response = testapp.post("/journal/new-entry", journal_info)
-#     next_page = response.follow()
-#     assert "testing" in next_page.ubody
-
-
-# def test_edit_method_successful_updates(testapp, edit_info):
-#     """Test if content is updated successfully."""
-#     response = testapp.post('/journal/1/edit-entry', edit_info)
-#     next_page = response.follow()
-#     assert 'edited journal' in next_page.ubody
-
-
-# def test_edit_method_successful_updates_and_directs_detail_view(testapp, edit_info):
-#     """Test after updating we get re-directed to detail view."""
-#     response = testapp.post('/journal/1/edit-entry', edit_info)
-#     assert response.location == 'http://localhost/journal/1'
-
-
-# def test_edit_method_return_httpnotfound(testapp, edit_info):
-#     """Assert if a http not found error(raised by apperror) is popped from invalid post req."""
-#     with pytest.raises(AppError):
-#         testapp.post('/journal/200/edit-entry', edit_info)
-
-
-# def test_create_method_return_httpnotfound_with_no_var(testapp):
-#     """Assert if a http not found error(raised by apperror) is popped from invalid post req."""
-#     with pytest.raises(AppError):
-#         testapp.post('/journal/new-entry', {})
+    request.addfinalizer(tearDown)
+    return TestApp(app)
 
 
 """Searching module test."""
+
+
 def test_count_words_word_found():
     """Function should return number of times given word in text."""
     from TechLurker.searching import count_words
@@ -267,6 +143,8 @@ def test_parse_job_titles():
 
 
 """Graph module tests."""
+
+
 def test_chart_on_keyword_returns_chart():
     """Test that html is generated for the chart."""
     from graph import generate_chart_on_keyword_v2
@@ -328,3 +206,270 @@ def test_dict_to_pie_chart_url():
     }
     result = dict_to_pie_chart_tag(mock_dict, 'title')
     assert '<div>' in result
+
+
+def test_post_to_home_404_no_category(testapp):
+    """Post to home page should redirect to results."""
+    try:
+        testapp.post('/', {'category': None})
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def test_get_bad_url_raise_404(testapp):
+    """Post to home page should redirect to results."""
+    try:
+        testapp.get('/results/test')
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def test_post_to_job_raise_404(testapp):
+    """Post to results/jobs should return jobs as the result parameter."""
+    try:
+        testapp.post('/results/test', {})
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def est_get_results_job_posts(testapp):
+    """Post to results/jobs should redirect to results page."""
+    response = testapp.get('/results/job_posts')
+    assert 'python.org/jobs' in response.ubody
+
+
+def test_get_results_programming_languages(testapp):
+    """Get request to results/prgoraming_languages."""
+    response = testapp.get('/results/programming_languages')
+    assert 'Reddit' in response.ubody
+
+
+def test_get_results_security(testapp):
+    """Get request to results/security."""
+    response = testapp.get('/results/security')
+    assert 'trendmicro' in response.ubody
+
+
+def test_get_results_programming_questions(testapp):
+    """Get request to results/programming_questions."""
+    response = testapp.get('/results/programming_questions')
+    assert 'Reddit' in response.ubody
+
+
+def test_get_results_webdev(testapp):
+    """Get request to results/webdev."""
+    response = testapp.get('/results/webdev')
+    assert 'TechRepublic/webdev' in response.ubody
+
+
+def test_get_results_job_posts_doesnt_have_incorrect(testapp):
+    """Post to results/jobs should redirect to results page."""
+    response = testapp.get('/results/job_posts')
+    assert 'TechRepublic/webdev' not in response.ubody
+
+
+def test_get_results_programming_languages_doesnt_have_incorrect(testapp):
+    """Get request to results/prgoraming_languages."""
+    response = testapp.get('/results/programming_languages')
+    assert 'trendmicro' not in response.ubody
+
+
+def test_get_results_security_doesnt_have_incorrect(testapp):
+    """Get request to results/security."""
+    response = testapp.get('/results/security')
+    assert 'Reddit' not in response.ubody
+
+
+def test_get_results_programming_questions_doesnt_have_incorrect(testapp):
+    """Get request to results/programming_questions."""
+    response = testapp.get('/results/programming_questions')
+    assert 'TechRepublic/webdev' not in response.ubody
+
+
+def test_get_results_webdev_doesnt_have_incorrect(testapp):
+    """Get request to results/webdev."""
+    response = testapp.get('/results/webdev')
+    assert 'Reddit' not in response.ubody
+
+
+def test_db_had_model_pyjob_title(dummy_request):
+    """Pyjob data should have title stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(PyjobData).all()
+    assert response[0].title == 'test_title'
+
+
+def test_db_had_model_pyjob_url(dummy_request):
+    """Pyjob data should have url stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(PyjobData).all()
+    assert response[0].url == 'randome.com'
+
+
+def test_db_stores_redditdata_title(dummy_request):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(RedditData).all()
+    assert response[0].title == 'A_Post'
+
+
+def test_db_stores_redditdata_content(dummy_request):
+    """Redditdata data should have content stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(RedditData).all()
+    assert response[0].content == 'This is a reddit post'
+
+
+def test_db_stores_securitydata_date(dummy_request):
+    """Securitynewsdata should have date stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].date == '11/17/2017'
+
+
+def test_db_stores_securitydata_title(dummy_request):
+    """Securitynewsdata should have title stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].title == 'Security Yo'
+
+
+def test_db_stores_techrepublicdata_from_forum(dummy_request):
+    """Techrepublicdata should have from_forum stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(TechRepublicData).all()
+    assert response[0].from_forum == 'webdev'
+
+
+def test_db_stores_techrepublicdata_title(dummy_request):
+    """Techrepublicdata should have title stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(TechRepublicData).all()
+    assert response[0].title == 'tech newz'
+
+
+def test_view_has_result_from_database_pyjobdata(dummy_request, testapp):
+    """Pyjob data should have title stored correctly."""
+    new_lock = PyjobData(
+        title='test_title',
+        descrip='test description',
+        loc='Seattle, WA, USA',
+        job_type='backend',
+        url='randome.com'
+    )
+    dummy_request.dbsession.add(new_lock)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/job_posts')
+    assert 'python.org/jobs' in response.ubody
+
+
+def test_view_has_result_from_database_redditdata_pl(dummy_request, testapp):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/programming_languages')
+    assert 'Reddit' in response.ubody
+
+
+def test_view_has_result_from_database_security(dummy_request, testapp):
+    """Securitynewsdata should have date stored correctly."""
+    sample_security = SecurityNewsData(
+        title='Security Yo',
+        articleContent='This is an article about cyber security',
+        date='11/17/2017',
+        url='www.security.com'
+    )
+    dummy_request.dbsession.add(sample_security)
+    dummy_request.dbsession.commit()
+    response = dummy_request.dbsession.query(SecurityNewsData).all()
+    assert response[0].date == '11/17/2017'
+    response = testapp.get('/results/security')
+    assert 'trendmicro' in response.ubody
+
+
+def test_view_has_result_from_database_redditdata_pq(dummy_request, testapp):
+    """Redditdata data should have title stored correctly."""
+    sample_reddit = RedditData(
+        title='A_Post',
+        content='This is a reddit post',
+        score='100000000'
+    )
+    dummy_request.dbsession.add(sample_reddit)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/programming_questions')
+    assert 'Reddit' in response.ubody
+
+
+def test_view_has_result_from_database_tr_webdev(dummy_request, testapp):
+    """Techrepublicdata should have from_forum stored correctly."""
+    sample_techrepublic = TechRepublicData(
+        title='tech newz',
+        content='an awesome artile about something',
+        votes='A lot, like more than one',
+        from_forum='webdev'
+    )
+    dummy_request.dbsession.add(sample_techrepublic)
+    dummy_request.dbsession.commit()
+    response = testapp.get('/results/webdev')
+    assert 'TechRepublic/webdev' in response.ubody

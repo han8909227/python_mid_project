@@ -1,3 +1,11 @@
 [run]
 source = TechLurker
-omit = TechLurker/test*
+
+omit =
+    TechLurker/scripts*
+    TechLurker/__init__
+
+include = ../graph
+
+[report]
+show_missing = True
