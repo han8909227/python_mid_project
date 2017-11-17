@@ -14,7 +14,7 @@ from webtest.app import AppError
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 # from faker import Faker
 from TechLurker.views.default import home_view, results_view, about_view
-
+import pdb
 
 @pytest.fixture(scope='session')
 def configuration(request):
@@ -28,7 +28,7 @@ def configuration(request):
     This configuration will persist for the entire duration of your PyTest run.
     """
     config = testing.setUp(settings={
-        'sqlalchemy.url': 'postgres://localhost:5432/test_db'
+        'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
     })
     config.include("TechLurker.models")
     config.include("TechLurker.routes")
@@ -90,12 +90,6 @@ def test_home_page(dummy_request):
     assert response == {}
 
 
-def test_results_page(dummy_request):
-    """Test index return list of journals."""
-    response = results_view(dummy_request)
-    assert response == {}
-
-
 def test_about_page(dummy_request):
     """Test about page is loaded."""
     response = about_view(dummy_request)
@@ -111,34 +105,34 @@ def test_about_page(dummy_request):
 #     assert response['Journal'] == new_journal.to_dict()
 
 
-# @pytest.fixture(scope="session")
-# def testapp(request):
-#     """Initialte teh test app."""
-#     from webtest import TestApp
-#     from pyramid.config import Configurator
+@pytest.fixture(scope="session")
+def testapp(request):
+    """Initialte teh test app."""
+    from webtest import TestApp
+    from pyramid.config import Configurator
 
-#     def main():
-#         settings = {
-#             'sqlalchemy.url': 'postgres://postgres:postgres@localhost:5432/testjournals'
-#         }  # points to a database
-#         config = Configurator(settings=settings)
-#         config.include('pyramid_jinja2')
-#         config.include('learning_journal.routes')
-#         config.include('learning_journal.models')
-#         config.scan()
-#         return config.make_wsgi_app()
+    def main():
+        settings = {
+            'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
+        }  # points to a database
+        config = Configurator(settings=settings)
+        config.include('pyramid_jinja2')
+        config.include('TechLurker.routes')
+        config.include('TechLurker.models')
+        config.scan()
+        return config.make_wsgi_app()
 
-#     app = main()
+    app = main()
 
-#     SessionFactory = app.registry["dbsession_factory"]
-#     engine = SessionFactory().bind
-#     Base.metadata.create_all(bind=engine)  # builds the tables
+    SessionFactory = app.registry["dbsession_factory"]
+    engine = SessionFactory().bind
+    Base.metadata.create_all(bind=engine)  # builds the tables
 
-#     def tearDown():
-#         Base.metadata.drop_all(bind=engine)
+    def tearDown():
+        Base.metadata.drop_all(bind=engine)
 
-#     request.addfinalizer(tearDown)
-#     return TestApp(app)
+    request.addfinalizer(tearDown)
+    return TestApp(app)
 
 
 # FAKE = Faker()
@@ -328,3 +322,57 @@ def test_dict_to_pie_chart_url():
     }
     result = dict_to_pie_chart_tag(mock_dict, 'title')
     assert '<div>' in result
+
+
+def test_post_to_home_404_no_category(testapp):
+    """Post to home page should redirect to results."""
+    try:
+        testapp.post('/', {'category': None})
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def test_get_bad_url_raise_404(testapp):
+    """Post to home page should redirect to results."""
+    try:
+        testapp.get('/results/test')
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def test_post_to_job_raise_404(testapp):
+    """Post to results/jobs should return jobs as the result parameter."""
+    try:
+        testapp.post('/results/test', {})
+    except AppError as err:
+        assert '404 Not Found' in err.args[0]
+
+
+def test_post_redirects_to_result_page(testapp):
+    """Post to results/jobs should redirect to results page."""
+    response = testapp.get('/results/job_posts')
+    assert 'python.org/jobs' in response.ubody
+
+
+def test_get_results_programming_languages(testapp):
+    """Get request to results/prgoraming_languages."""
+    response = testapp.get('/results/programming_languages')
+    assert 'Reddit' in response.ubody
+
+
+def test_get_results_security(testapp):
+    """Get request to results/security."""
+    response = testapp.get('/results/security')
+    assert 'trendmicro' in response.ubody
+
+
+def test_get_results_programming_questions(testapp):
+    """Get request to results/programming_questions."""
+    response = testapp.get('/results/programming_questions')
+    assert 'Reddit' in response.ubody
+
+
+def test_get_results_webdev(testapp):
+    """Get request to results/webdev."""
+    response = testapp.get('/results/webdev')
+    assert 'TechRepublic/webdev' in response.ubody
