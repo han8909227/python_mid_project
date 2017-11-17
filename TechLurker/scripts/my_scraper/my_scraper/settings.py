@@ -13,7 +13,7 @@ BOT_NAME = 'my_scraper'
 
 SPIDER_MODULES = ['TechLurker.scripts.my_scraper.my_scraper.spiders']
 NEWSPIDER_MODULE = 'TechLurker.scripts.my_scraper.my_scraper.spiders'
-CLOSESPIDER_PAGECOUNT = 100
+CLOSESPIDER_PAGECOUNT = 75
 
 
 # Crawl responsibly by identifying yourself (and your website) on the user-agent
