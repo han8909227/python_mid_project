@@ -1,4 +1,4 @@
-
+"""Spider crawling module."""
 import os
 from twisted.internet import reactor, defer
 from scrapy.crawler import CrawlerRunner
@@ -18,7 +18,9 @@ from TechLurker.scripts.my_scraper.my_scraper.spiders.security_news_spider impor
 from scrapy.settings import Settings
 import nltk
 
+
 def spider_crawl():
+    """Send spiders out to crawl."""
     nltk.download('punkt')
     settings = Settings()
 
