@@ -1,7 +1,4 @@
 """Test module for TechLurker."""
-# def dummy_request(dbsession):
-#     """Dummy request to simulate request."""
-#     return testing.DummyRequest(dbsession=dbsession)
 import pytest
 from pyramid import testing
 import transaction
@@ -14,7 +11,6 @@ from webtest.app import AppError
 from pyramid.httpexceptions import HTTPNotFound, HTTPFound, HTTPBadRequest
 # from faker import Faker
 from TechLurker.views.default import home_view, results_view, about_view
-import pdb
 
 
 @pytest.fixture(scope='session')
@@ -29,7 +25,7 @@ def configuration(request):
     This configuration will persist for the entire duration of your PyTest run.
     """
     config = testing.setUp(settings={
-        'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
+        'sqlalchemy.url': 'postgres://localhost:5432/test_tl'
     })
     config.include("TechLurker.models")
     config.include("TechLurker.routes")
@@ -93,7 +89,7 @@ def testapp(request):
 
     def main():
         settings = {
-            'sqlalchemy.url': 'postgres://postgres:potato@localhost:5432/test_tl'
+            'sqlalchemy.url': 'postgres://localhost:5432/test_tl'
         }  # points to a database
         config = Configurator(settings=settings)
         config.include('pyramid_jinja2')
