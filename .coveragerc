@@ -1,0 +1,11 @@
+[run]
+source = TechLurker
+         ../graph
+
+omit =
+    TechLurker/scripts*
+    TechLurker/__init__
+
+
+[report]
+show_missing = True

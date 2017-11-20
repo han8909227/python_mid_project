@@ -1,0 +1,29 @@
+{% extends 'layout.jinja2' %}
+{% block content %}
+<br>
+<br>
+<p class="embigened_title">TechLurker</p>
+<p class="page_intro">Your one stop location for Tech statistics.</p>
+<div class="search_form">
+    <form name="new_search" method="POST">
+        <select class="category_select" name="category">
+            <option selected="selected">Select a Category</option>
+            <option name="ProgrammingLanguages">Programming Languages</option>
+{#             <option name="IT">Information Technology</option> #}
+            <option name="Hiring">Job posts</option>
+            <option name="Security">Security</option>
+{#             <option name="Companies">Companies</option> #}
+{#             <option name="Hardware">Hardware</option> #}
+            <option name="Programming Questions">Programming Questions</option>
+            <option name="Webdev">Webdev</option>
+        </select>
+        <button class="submit_button" type="submit">Submit</button>
+    </form>
+
+</div>
+<br>
+<br>
+<br>
+<br>
+
+{% endblock %}
