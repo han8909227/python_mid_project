@@ -76,7 +76,7 @@ urllib3==1.22
 venusian==1.1.0
 virtualenv==15.1.0
 w3lib==1.18.0
-waitress==1.1.0
+waitress==1.4.1
 wcwidth==0.1.7
 WebOb==1.7.3
 WebTest==2.0.29
